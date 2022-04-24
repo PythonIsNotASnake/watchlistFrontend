@@ -1,5 +1,15 @@
 # watchlistFrontend
 
+# Deployment
+
+## ARM Deployment (e.g. Raspberry PI)
+In project directory use following commands.  
+To build project "npm run build"  
+To build docker image "docker build -t watchlistFrontend:latest"  
+To run docker container "docker run -it -p 3000:80 --rm --name watchlistFrontend watchlistFrontend:latest"  
+Congratulations! Your website can be reached on http://<ip-address>:3000/  
+  
+  
 This template should help get you started developing with Vue 3 in Vite.
 
 ## Recommended IDE Setup
