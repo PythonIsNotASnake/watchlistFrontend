@@ -1,5 +1,17 @@
 # WatchlistFrontend
 
+# Deployment
+
+## ARM Deployment (e.g. Raspberry PI)
+In project directory use following commands.  
+To install all needed dependencies "sudo npm install -g @angular/cli"  
+and "sudo npm install"  
+To build project "npm run build"  
+To build docker image "docker build -t watchlistfrontend:latest ."  
+To run docker container "docker run -it --name watchlistFrontend -p 4200:80 watchlistfrontend:latest"  
+Congratulations! Your website can be reached on http://<ip-address>:4200/  
+Hint: If you want to start the container on startup of your machine automatically insert the additional flag "--restart always" to the "docker run"-command.  
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.3.5.
 
 ## Development server
