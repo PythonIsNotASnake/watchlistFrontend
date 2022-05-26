@@ -1,17 +1,28 @@
-<p>overview works!</p>
 
-<nz-table>
-<!-- #basicTable [nzData]="dataSet"-->
+
+<nz-table  #basicTable nzShowPagination [nzData]="records" [nzTotal]="50"
+[nzFrontPagination]="false"
+[nzPageSize]="limit"
+[nzPageIndex]="start"
+(nzQueryParams)="onQueryParamsChange($event)">
     <thead>
         <tr>
             <th>Titel</th>
             <th>Genre</th>
+            <th>Description</th>
+            <th>Actions</th>
         </tr>
     </thead>
     <tbody>
-        <!--<tr *ngFor="let data of basicTable.data">
-            <td>{{ data.title }}</td>
-            <td>{{ data.genre }}</td>
-        </tr>-->
+        <tr *ngFor="let data of basicTable.data">
+            <td routerLink="/detailview/{{ data.id }}">{{ data.title }}</td>
+            <td routerLink="/detailview/{{ data.id }}">{{ data.genre }}</td>
+            <td routerLink="/detailview/{{ data.id }}">{{ data.description }}</td>
+            <td>
+                <a routerLink="/editview/{{ data.id }}">Edit</a>
+                <nz-divider nzType="vertical"></nz-divider>
+                <a (click)="deleteRecord(data.id)">Delete</a>
+            </td>
+        </tr>
     </tbody>
 </nz-table>

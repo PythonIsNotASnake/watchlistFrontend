@@ -1,1 +1,49 @@
 /* You can add global styles to this file, and also import other style files */
+.notification {
+    background-color: #55BCC9;
+    /*color: white;*/
+}
+.ant-notification-notice-message {
+    color: white;
+}
+
+.ant-notification-notice-description {
+    color: white;
+}
+.anticon.ant-notification-notice-icon-success {
+    color: #CAFAFE;
+}
+.background {
+    background-color: #656565 !important;
+    color: white !important;
+    /*background-color: #CAFAFE !important;*/
+}
+.primary {
+    background-color: #404040 !important;
+    color: white !important;
+    /*background-color: #FC4445 !important;*/
+}
+.secondary {
+    background-color: #333333 !important;
+    color: white !important;
+    /*background-color: #3FEEE6 !important;*/
+    /*background-color: #96C9DC !important;*/
+}
+.ant-layout-sider-children {
+    background-color: #FC4445 !important;
+}
+.ant-menu-dark {
+    background-color: #FC4445 !important;
+}
+.ant-menu-item {
+    background-color: #FC4445 !important;
+}
+.ant-menu {
+    background-color: #FC4445 !important;
+}
+.ant-menu-inline {
+    background-color: #FC4445 !important;
+}
+.sidebar-logo {
+    background-color: #FC4445 !important;
+}

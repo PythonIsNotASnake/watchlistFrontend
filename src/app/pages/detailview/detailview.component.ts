@@ -10,9 +10,12 @@ import { Axios } from 'axios';
 })
 export class DetailviewComponent implements OnInit {
 
-  url = "https://www.youtube.com/embed/q2I0ulTZWXA";
-  safeSrc: SafeResourceUrl;
+  url = "";
+  safeSrc = {};
   public id: any;
+  title = "";
+  description = "";
+  genre = "";
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
@@ -20,26 +23,29 @@ export class DetailviewComponent implements OnInit {
     });
     const axios = require('axios').default;
     const instance = axios.create({
-      baseURL: 'http://localhost:8080',
-      timeout: 1000,
-      headers: {'X-Custom-Header': 'foobar'}
+      baseURL: 'http://192.168.178.29:8080',
+      //baseURL: 'http://localhost:8080',
+      //headers: {'Access-Control-Allow-Origin': '*',
+      //'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept'}
     });
-    instance.get('/records/' + this.id)
-    .then(function (response: any) {
-      // handle success
-      console.log(response);
-    })
-    .catch(function (error: any) {
-      // handle error
-      console.log(error);
-    })
-    .then(function () {
-      // always executed
-    });
+
+    this.getRecord(instance);
   }
 
-  constructor(private sanitizer: DomSanitizer, private route: ActivatedRoute) { 
-    this.safeSrc =  this.sanitizer.bypassSecurityTrustResourceUrl(this.url);
+  async getRecord(instance: any) {
+    try {
+      const response = await instance.get('/records/' + this.id);
+      this.title = response.data.title;
+      this.description = response.data.description;
+      this.genre = response.data.genre;
+      this.url = response.data.link;
+
+      this.safeSrc =  this.sanitizer.bypassSecurityTrustResourceUrl(this.url);
+    } catch (error) {
+      console.error(error);
+    }
   }
+
+  constructor(private sanitizer: DomSanitizer, private route: ActivatedRoute) {}
 
 }
