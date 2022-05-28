@@ -13,37 +13,26 @@
 .anticon.ant-notification-notice-icon-success {
     color: #CAFAFE;
 }
+.card {
+    background-color: white;
+    padding: 10px;
+}
 .background {
-    background-color: #656565 !important;
+    /*background-color: #656565 !important;*/
+    background-color: lightgray !important;
     color: white !important;
     /*background-color: #CAFAFE !important;*/
 }
 .primary {
-    background-color: #404040 !important;
-    color: white !important;
+    /*background-color: #404040 !important;*/
+    color: #612408 !important;
     /*background-color: #FC4445 !important;*/
+    background-color: #084C61 !important;
 }
 .secondary {
-    background-color: #333333 !important;
+    /*background-color: #333333 !important;*/
+    background-color: lightgray !important;
     color: white !important;
     /*background-color: #3FEEE6 !important;*/
     /*background-color: #96C9DC !important;*/
-}
-.ant-layout-sider-children {
-    background-color: #FC4445 !important;
-}
-.ant-menu-dark {
-    background-color: #FC4445 !important;
-}
-.ant-menu-item {
-    background-color: #FC4445 !important;
-}
-.ant-menu {
-    background-color: #FC4445 !important;
-}
-.ant-menu-inline {
-    background-color: #FC4445 !important;
-}
-.sidebar-logo {
-    background-color: #FC4445 !important;
 }

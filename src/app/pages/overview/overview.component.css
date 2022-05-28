@@ -1,0 +1,23 @@
+.container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-evenly;
+    gap: 20px;
+}
+.defaultcard {
+    flex-grow: 1;
+    padding-top: 10px;
+}
+#create {
+    background-color: #E3B505;
+}
+#second {
+    background-color: #4F6D7A;
+}
+#third {
+    background-color: #DB504A;
+}
+#fourth {
+    background-color: #56A3A6;
+}

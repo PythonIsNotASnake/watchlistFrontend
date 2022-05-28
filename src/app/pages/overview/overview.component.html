@@ -1,28 +1,59 @@
+<div class="container">
 
+    <nz-card class="defaultcard" id="third" [nzCover]="createTemplate">
+        <nz-card-meta
+            nzTitle="Anlegen"
+            nzDescription="Legen Sie einen neuen Eintrag an."
+        ></nz-card-meta>
+    </nz-card>
+    <nz-card class="defaultcard" id="fourth" [nzCover]="statisticTemplate">
+        <nz-card-meta
+            nzTitle="Statistik"
+            nzDescription=""
+        ></nz-card-meta>
+        <nz-row [nzGutter]="16">
+            <nz-col [nzSpan]="12">
+                <nz-statistic [nzValue]="(total | number)!" [nzTitle]="'Anzahl Einträge'"></nz-statistic>
+            </nz-col>
+            <nz-col [nzSpan]="12">
+                <nz-statistic [nzValue]="(genres.length | number)!" [nzTitle]="'Anzahl Genres'"></nz-statistic>
+            </nz-col>
+        </nz-row>
+    </nz-card>
 
-<nz-table  #basicTable nzShowPagination [nzData]="records" [nzTotal]="50"
-[nzFrontPagination]="false"
-[nzPageSize]="limit"
-[nzPageIndex]="start"
-(nzQueryParams)="onQueryParamsChange($event)">
-    <thead>
-        <tr>
-            <th>Titel</th>
-            <th>Genre</th>
-            <th>Description</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let data of basicTable.data">
-            <td routerLink="/detailview/{{ data.id }}">{{ data.title }}</td>
-            <td routerLink="/detailview/{{ data.id }}">{{ data.genre }}</td>
-            <td routerLink="/detailview/{{ data.id }}">{{ data.description }}</td>
-            <td>
-                <a routerLink="/editview/{{ data.id }}">Edit</a>
-                <nz-divider nzType="vertical"></nz-divider>
-                <a (click)="deleteRecord(data.id)">Delete</a>
-            </td>
-        </tr>
-    </tbody>
-</nz-table>
+    <ng-template #createTemplate>
+        <i nz-icon nzType="plus-circle" [nzTheme]="'twotone'" [nzTwotoneColor]="'#084C61'" style="font-size: 50px;"></i>
+    </ng-template>
+    <ng-template #statisticTemplate>
+        <i nz-icon nzType="fund" [nzTheme]="'twotone'" [nzTwotoneColor]="'#084C61'" style="font-size: 50px;"></i>
+    </ng-template> 
+</div>
+<br>
+<div class="card">
+    <nz-table  #basicTable nzShowPagination [nzData]="records" [nzTotal]="total"
+    [nzFrontPagination]="false"
+    [nzPageSize]="limit"
+    [nzPageIndex]="start"
+    (nzQueryParams)="onQueryParamsChange($event)">
+        <thead>
+            <tr>
+                <th>Titel</th>
+                <th>Genre</th>
+                <th>Beschreibung</th>
+                <th>Aktionen</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let data of basicTable.data">
+                <td routerLink="/detailview/{{ data.id }}">{{ data.title }}</td>
+                <td routerLink="/detailview/{{ data.id }}">{{ data.genre }}</td>
+                <td routerLink="/detailview/{{ data.id }}">{{ data.description }}</td>
+                <td>
+                    <i routerLink="/editview/{{ data.id }}" nz-icon nzType="edit" [nzTheme]="'twotone'" [nzTwotoneColor]="'brown'"></i>
+                    <nz-divider nzType="vertical"></nz-divider>
+                    <i (click)="deleteRecord(data.id)" nz-icon nzType="delete" [nzTheme]="'twotone'" [nzTwotoneColor]="'red'" style="cursor: pointer;"></i>
+                </td>
+            </tr>
+        </tbody>
+    </nz-table>
+</div>
