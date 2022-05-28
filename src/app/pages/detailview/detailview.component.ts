@@ -24,9 +24,6 @@ export class DetailviewComponent implements OnInit {
     const axios = require('axios').default;
     const instance = axios.create({
       baseURL: 'http://192.168.178.29:8080',
-      //baseURL: 'http://localhost:8080',
-      //headers: {'Access-Control-Allow-Origin': '*',
-      //'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept'}
     });
 
     this.getRecord(instance);
@@ -40,7 +37,7 @@ export class DetailviewComponent implements OnInit {
       this.genre = response.data.genre;
       this.url = response.data.link;
 
-      this.safeSrc =  this.sanitizer.bypassSecurityTrustResourceUrl(this.url);
+      this.safeSrc = this.sanitizer.bypassSecurityTrustResourceUrl(this.url + '?enablejsapi=1');
     } catch (error) {
       console.error(error);
     }
