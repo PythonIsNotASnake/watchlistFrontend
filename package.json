@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "node --max_old_space_size=500 ./node_modules/@angular/cli/bin/ng serve --open",
-    "build": "node --max_old_space_size=500 ./node_modules/@angular/cli/bin/ng build",
+    "start": "node --max_old_space_size=5120 ./node_modules/@angular/cli/bin/ng serve --open",
+    "build": "node --max_old_space_size=5120 ./node_modules/@angular/cli/bin/ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
@@ -30,6 +30,7 @@
     "@angular/compiler-cli": "~13.3.0",
     "@types/jasmine": "~3.10.0",
     "@types/node": "^12.11.1",
+    "jasmine": "^4.4.0",
     "jasmine-core": "~4.0.0",
     "karma": "~6.3.0",
     "karma-chrome-launcher": "~3.1.0",

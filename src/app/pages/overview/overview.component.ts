@@ -52,8 +52,8 @@ export class OverviewComponent implements OnInit {
       this.loadDataFromServer(1, this.limit);
       this.notification.create(
         'success',
-        'Deleted',
-        'Successfully delete record.',
+        'Gelöscht',
+        'Eintrag wurde erfolgreich gelöscht.',
         {
           nzAnimate: true,
           nzClass: 'notification'

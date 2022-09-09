@@ -1,6 +1,6 @@
 <div class="container">
 
-    <nz-card class="defaultcard" id="third" [nzCover]="createTemplate">
+    <nz-card class="defaultcard" id="third" [nzCover]="createTemplate" routerLink="/createview" style="cursor: pointer;">
         <nz-card-meta
             nzTitle="Anlegen"
             nzDescription="Legen Sie einen neuen Eintrag an."
@@ -49,7 +49,7 @@
                 <td routerLink="/detailview/{{ data.id }}">{{ data.genre }}</td>
                 <td routerLink="/detailview/{{ data.id }}">{{ data.description }}</td>
                 <td>
-                    <i routerLink="/editview/{{ data.id }}" nz-icon nzType="edit" [nzTheme]="'twotone'" [nzTwotoneColor]="'brown'"></i>
+                    <i routerLink="/createview/{{ data.id }}" nz-icon nzType="edit" [nzTheme]="'twotone'" [nzTwotoneColor]="'brown'"></i>
                     <nz-divider nzType="vertical"></nz-divider>
                     <i (click)="deleteRecord(data.id)" nz-icon nzType="delete" [nzTheme]="'twotone'" [nzTwotoneColor]="'red'" style="cursor: pointer;"></i>
                 </td>

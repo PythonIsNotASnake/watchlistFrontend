@@ -1,0 +1,47 @@
+<div class="card">
+    <div>
+        <button routerLink="/" nz-button nzType="default">Zurück</button>
+    </div>
+
+    <form #record="ngForm" nz-form>
+        <nz-form-item>
+            <nz-form-label [nzSm]="10" [nzXs]="24" nzRequired nzFor="title">Titel</nz-form-label>
+            <input type="text" name="title" placeholder="Title" required ngModel="{{ title }}">
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label [nzSm]="10" [nzXs]="24" nzRequired nzFor="genre">Genre</nz-form-label>
+            <input type="text" name="genre" placeholder="genre" required ngModel="{{ genre }}">
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label [nzSm]="10" [nzXs]="24" nzFor="description">Beschreibung</nz-form-label>
+            <textarea [nzAutosize]="{ minRows: 1, maxRows: 7 }" type="text" name="description" placeholder="Kurzbeschreibung" ngModel="{{ description }}"></textarea>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label [nzSm]="10" [nzXs]="24" nzRequired nzFor="url">Trailer</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24">
+                <nz-input-group nzAddOnBefore="http://www.youtube.com/embed/">
+                    <input type="text" required name="url" placeholder="Youtube Url" ngModel="{{ url }}"/>
+                </nz-input-group>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-control [nzSpan]="14" [nzOffset]="10">
+                
+                <div *ngIf="isUpdate; else elseBlock">
+                    <button nz-button nzType="default" (click)="preview(record.value)">Vorschau</button>
+                    <button nz-button nzType="primary" (click)="updateRecord(record.value)" [nzLoading]="isLoading" id="create">Aktualisieren</button>
+                </div>
+                <ng-template #elseBlock>
+                    <button nz-button nzType="default" (click)="preview(record.value)">Vorschau</button>
+                    <button nz-button nzType="primary" (click)="createRecord(record.value)" [nzLoading]="isLoading" [disabled]="!record.valid" id="create">Erstellen</button>
+                </ng-template>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-control [nzSpan]="14" [nzOffset]="10">
+                <iframe width="360" height="240" [src]="safeSrc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </nz-form-control>
+        </nz-form-item>
+    </form>
+
+</div>

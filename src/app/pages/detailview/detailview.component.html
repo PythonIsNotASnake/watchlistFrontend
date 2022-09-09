@@ -1,5 +1,18 @@
 <div class="card">
-    <p>detailview works!</p>
+    <div>
+        <button routerLink="/" nz-button nzType="default" id="back">Zurück</button>
+    </div>
+    <br/>
 
-    <iframe width="480" height="320" [src]="safeSrc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    <nz-descriptions nzBordered [nzColumn]="1">
+        <nz-descriptions-item nzTitle="Titel">{{ this.title }}</nz-descriptions-item>
+        <br/>
+        <nz-descriptions-item nzTitle="Genre">{{ this.genre }}</nz-descriptions-item>
+        <br/>
+        <nz-descriptions-item nzTitle="Kurzbeschreibung">{{ this.description }}</nz-descriptions-item>
+        <br/>
+        <nz-descriptions-item nzTitle="Trailer">
+            <iframe width="480" height="320" [src]="safeSrc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </nz-descriptions-item>
+    </nz-descriptions>
 </div>
