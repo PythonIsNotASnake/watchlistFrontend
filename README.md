@@ -14,6 +14,7 @@ Extract builded files to /var/www/html
 ###Configure your Apache Web Server
 #### /etc/apache2/apache2.conf
 Add following code:
+```
 <Directory /var/www/html>
 	Options Indexes FollowSymLinks
 	AllowOverride All
@@ -26,8 +27,10 @@ Add following code:
 		RewriteRule ^ - [L]
 		RewriteRule ^ ./index.html
 </Directory>
+```
 #### /var/www/html/.htaccess
 Create .htaccess file with following content:
+```
 <IfModule mod_rewrite.c>
 
 	RewriteEngine On
@@ -40,7 +43,7 @@ Create .htaccess file with following content:
 	RewriteRule ^ ./index.html
 
 </IfModule>
-
+```
 
 ## ARM Deployment (e.g. Raspberry PI)
 In project directory use following commands.  
