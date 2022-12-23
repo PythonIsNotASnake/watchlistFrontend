@@ -2,6 +2,46 @@
 
 # Deployment
 
+## Apache Web Server
+Install Apache Web Server.  
+Enable Apaches Rewrite Mode in Terminal with "sudo a2enmod rewrite"  
+and restart Apache2 with "systemctl restart apache2"  
+In project directory use following commands.  
+To install all needed dependencies "sudo npm install -g @angular/cli"  
+and "sudo npm install"  
+To build project "npm run build" or "npm run build --prod"  
+Extract builded files to /var/www/html
+###Configure your Apache Web Server
+#### /etc/apache2/apache2.conf
+Add following code:
+<Directory /var/www/html>
+	Options Indexes FollowSymLinks
+	AllowOverride All
+	Require all granted
+		
+		RewriteEngine On
+		RewriteBase /
+		RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} -f [OR]
+		RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} -d
+		RewriteRule ^ - [L]
+		RewriteRule ^ ./index.html
+</Directory>
+#### /var/www/html/.htaccess
+Create .htaccess file with following content:
+<IfModule mod_rewrite.c>
+
+	RewriteEngine On
+	RewriteBase /
+
+	RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} -f [OR]
+	RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} -d
+
+	RewriteRule ^ - [L]
+	RewriteRule ^ ./index.html
+
+</IfModule>
+
+
 ## ARM Deployment (e.g. Raspberry PI)
 In project directory use following commands.  
 To install all needed dependencies "sudo npm install -g @angular/cli"  
