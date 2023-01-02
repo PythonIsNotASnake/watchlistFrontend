@@ -19,7 +19,7 @@
         <nz-form-item>
             <nz-form-label [nzSm]="10" [nzXs]="24" nzRequired nzFor="url">Trailer</nz-form-label>
             <nz-form-control [nzSm]="14" [nzXs]="24">
-                <nz-input-group nzAddOnBefore="http://www.youtube.com/embed/">
+                <nz-input-group nzAddOnBefore="{{ youtubeStartUrl }}">
                     <input type="text" required name="url" placeholder="Youtube Url" ngModel="{{ url }}"/>
                 </nz-input-group>
             </nz-form-control>

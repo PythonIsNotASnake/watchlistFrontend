@@ -19,6 +19,7 @@ export class CreateviewComponent implements OnInit {
   description = "";
   genre = "";
   url = "";
+  youtubeStartUrl = "https://www.youtube.com/embed/";
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
@@ -61,7 +62,7 @@ export class CreateviewComponent implements OnInit {
 
   async createRecord(record: any) {
     this.isLoading = true;
-    const data = {"title": record.title, "description": record.description, "genre": record.genre, "link": "http://www.youtube.com/embed/" + record.url};
+    const data = {"title": record.title, "description": record.description, "genre": record.genre, "link": this.youtubeStartUrl + record.url};
     
     try {
       const response = await axios.post('http://192.168.178.29:8080/records', data);
@@ -86,7 +87,7 @@ export class CreateviewComponent implements OnInit {
 
   async updateRecord(record: any) {
     this.isLoading = true;
-    const data = {"title": record.title, "description": record.description, "genre": record.genre, "link": "http://www.youtube.com/embed/" + record.url};
+    const data = {"title": record.title, "description": record.description, "genre": record.genre, "link": this.youtubeStartUrl + record.url};
     
     try {
       const response = await axios.put('http://192.168.178.29:8080/records/' + this.id, data);
