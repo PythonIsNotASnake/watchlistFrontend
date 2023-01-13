@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { Axios } from 'axios';
+import { AppConfigService } from '../../app.config.service';
 
 @Component({
   selector: 'app-detailview',
@@ -17,13 +18,21 @@ export class DetailviewComponent implements OnInit {
   description = "";
   genre = "";
 
+  public baseUrl = '';
+  public dropboxUrl = '';
+  public mastodonUrl = '';
+
   ngOnInit(): void {
+    this.baseUrl = this.config.baseApi;
+    this.dropboxUrl = this.config.dropboxUrl;
+    this.mastodonUrl = this.config.mastodonUrl;
+
     this.route.paramMap.subscribe(params => {
       this.id = params.get("id")
     });
     const axios = require('axios').default;
     const instance = axios.create({
-      baseURL: 'http://localhost:8080',
+      baseURL: this.baseUrl,
     });
 
     this.getRecord(instance);
@@ -43,6 +52,9 @@ export class DetailviewComponent implements OnInit {
     }
   }
 
-  constructor(private sanitizer: DomSanitizer, private route: ActivatedRoute) {}
+  constructor(
+    private sanitizer: DomSanitizer,
+    private route: ActivatedRoute,
+    private config: AppConfigService) {}
 
 }

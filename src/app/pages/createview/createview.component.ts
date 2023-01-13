@@ -3,6 +3,7 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import axios, { Axios } from 'axios';
+import { AppConfigService } from '../../app.config.service';
 
 @Component({
   selector: 'app-createview',
@@ -21,7 +22,15 @@ export class CreateviewComponent implements OnInit {
   url = "";
   youtubeStartUrl = "https://www.youtube.com/embed/";
 
+  public baseUrl = '';
+  public dropboxUrl = '';
+  public mastodonUrl = '';
+
   ngOnInit(): void {
+    this.baseUrl = this.config.baseApi;
+    this.dropboxUrl = this.config.dropboxUrl;
+    this.mastodonUrl = this.config.mastodonUrl;
+
     this.route.paramMap.subscribe(params => {
       this.id = params.get("id")
     });
@@ -42,7 +51,7 @@ export class CreateviewComponent implements OnInit {
 
  async getRecord(id: String) {
     try {
-      const response = await axios.get('http://localhost:8080/records/' + id);
+      const response = await axios.get(this.baseUrl + '/records/' + id);
       console.log(response);
       this.title = response.data.title;
       this.description = response.data.description;
@@ -65,7 +74,7 @@ export class CreateviewComponent implements OnInit {
     const data = {"title": record.title, "description": record.description, "genre": record.genre, "link": this.youtubeStartUrl + record.url};
     
     try {
-      const response = await axios.post('http://localhost:8080/records', data);
+      const response = await axios.post(this.baseUrl + '/records', data);
       console.log(response);
       this.id = response.data.data.id;
       this.isLoading = false;
@@ -90,7 +99,7 @@ export class CreateviewComponent implements OnInit {
     const data = {"title": record.title, "description": record.description, "genre": record.genre, "link": this.youtubeStartUrl + record.url};
     
     try {
-      const response = await axios.put('http://localhost:8080/records/' + this.id, data);
+      const response = await axios.put(this.baseUrl + '/records/' + this.id, data);
       console.log(response);
       this.isLoading = false;
       this.notification.create(
@@ -122,6 +131,7 @@ export class CreateviewComponent implements OnInit {
     private sanitizer: DomSanitizer, 
     private router: Router, 
     private route: ActivatedRoute,
-    private notification: NzNotificationService) {}
+    private notification: NzNotificationService,
+    private config: AppConfigService) {}
 
 }

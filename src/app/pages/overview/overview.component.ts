@@ -39,7 +39,7 @@ export class OverviewComponent implements OnInit {
   getGenres() {
     const axios = require('axios').default;
     const instance = axios.create({
-      baseURL: 'http://localhost:8080',
+      baseURL: this.baseUrl,
       timeout: 1000,
     });
     instance.get('/genres')
@@ -58,7 +58,7 @@ export class OverviewComponent implements OnInit {
   async deleteRecord(id: string) {
     const axios = require('axios').default;
     const instance = axios.create({
-      baseURL: 'http://localhost:8080',
+      baseURL: this.baseUrl,
     });
     try {
       await instance.delete('/records/' + id);
@@ -85,7 +85,7 @@ export class OverviewComponent implements OnInit {
     this.limit = pageSize;
     const axios = require('axios').default;
     const instance = axios.create({
-      baseURL: 'http://localhost:8080',
+      baseURL: this.baseUrl,
     });
     instance.get('/records/?sortDirection=' + this.sortDirection + '&sortValue=' + this.sortValue + '&start=' + (pageIndex-1) + '&limit=' + pageSize)
     .then((response: any) => {
@@ -109,7 +109,7 @@ export class OverviewComponent implements OnInit {
   isDropboxAuthorized(): void {
     const axios = require('axios').default;
     const instance = axios.create({
-      baseURL: 'http://localhost:8080',
+      baseURL: this.baseUrl,
       timeout: 1000,
     });
     instance.get('/dropbox/authorized')
@@ -130,7 +130,7 @@ export class OverviewComponent implements OnInit {
     const data = {"authorizationCode": auth.authCode};
     
     try {
-      const response = await axios.post('http://localhost:8080/dropbox/authorize', data);
+      const response = await axios.post(this.baseUrl + '/dropbox/authorize', data);
       if (response.data) {
         this.notification.create(
           'success',
@@ -178,7 +178,7 @@ export class OverviewComponent implements OnInit {
 
   async storeInDropbox() {
     try {
-      const response = await axios.post('http://localhost:8080/backups/store');
+      const response = await axios.post(this.baseUrl + '/backups/store');
       const status = response.status;
       if (status === 200 || status === 201) {
         this.notification.create(
@@ -217,7 +217,7 @@ export class OverviewComponent implements OnInit {
 
   async restoreFromDropbox() {
     try {
-      const response = await axios.post('http://localhost:8080/backups/restore');
+      const response = await axios.post(this.baseUrl + '/backups/restore');
       const status = response.status;
       if (status === 200 || status === 201) {
         this.notification.create(
