@@ -1,0 +1,5 @@
+{
+    "baseApi": "http://localhost:8080",
+    "dropboxUrl": "",
+    "mastodonUrl": ""
+}

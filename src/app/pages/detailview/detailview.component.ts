@@ -23,7 +23,7 @@ export class DetailviewComponent implements OnInit {
     });
     const axios = require('axios').default;
     const instance = axios.create({
-      baseURL: 'http://192.168.178.29:8080',
+      baseURL: 'http://localhost:8080',
     });
 
     this.getRecord(instance);

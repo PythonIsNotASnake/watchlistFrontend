@@ -1,15 +1,14 @@
 <div class="container">
 
-    <nz-card class="defaultcard" id="third" [nzCover]="createTemplate" routerLink="/createview" style="cursor: pointer;">
+    <nz-card class="defaultcard" id="creation" [nzCover]="createTemplate" routerLink="/createview" style="cursor: pointer;">
         <nz-card-meta
             nzTitle="Anlegen"
             nzDescription="Legen Sie einen neuen Eintrag an."
         ></nz-card-meta>
     </nz-card>
-    <nz-card class="defaultcard" id="fourth" [nzCover]="statisticTemplate">
+    <nz-card class="defaultcard" id="statistic" [nzCover]="statisticTemplate">
         <nz-card-meta
             nzTitle="Statistik"
-            nzDescription=""
         ></nz-card-meta>
         <nz-row [nzGutter]="16">
             <nz-col [nzSpan]="12">
@@ -20,13 +19,55 @@
             </nz-col>
         </nz-row>
     </nz-card>
+    <nz-card class="defaultcard" id="dropbox" [nzCover]="dropboxTemplate">
+        <nz-card-meta
+            nzTitle="Dropbox"
+        ></nz-card-meta>
+        <nz-row [nzGutter]="16">
+            <nz-col [nzSpan]="8" style="text-align: center;">
+                <br/>
+                <i nz-icon nzType="cloud-server" [nzTheme]="'outline'" style="font-size: 50px; cursor: pointer;" (click)="setDropboxVisible()" nzTooltipTitle="Authorisieren" nz-tooltip></i>
+            </nz-col>
+            <nz-col [nzSpan]="8" style="text-align: center;">
+                <br/>
+                <i nz-icon nzType="cloud-upload" [nzTheme]="'outline'" style="font-size: 50px; cursor: pointer;" (click)="storeInDropbox()" nzTooltipTitle="Daten in Cloud sichern" nz-tooltip></i>
+            </nz-col>
+            <nz-col [nzSpan]="8" style="text-align: center;">
+                <br/>
+                <i nz-icon nzType="cloud-download" [nzTheme]="'outline'" style="font-size: 50px; cursor: pointer;" (click)="restoreFromDropbox()" nzTooltipTitle="Daten aus Cloud wiederherstellen" nz-tooltip></i>
+            </nz-col>
+        </nz-row>
+    </nz-card>
+    <nz-card class="defaultcard" id="mastodon" [nzCover]="mastodonTemplate">
+        <nz-card-meta
+            nzTitle="Mastodon"
+        ></nz-card-meta>
+        <nz-row [nzGutter]="16">
+            <nz-col [nzSpan]="12" style="text-align: center;">
+                <br/>
+                <a href="{{ mastodonUrl }}" target="_blank" style="color: inherit;">
+                <i nz-icon nzType="login" [nzTheme]="'outline'" style="font-size: 50px; cursor: pointer;" nzTooltipTitle="Anmelden" nz-tooltip></i>
+                </a>
+            </nz-col>
+            <nz-col [nzSpan]="12" style="text-align: center;">
+                <br/>
+                <i nz-icon nzType="logout" [nzTheme]="'outline'" style="font-size: 50px; cursor: pointer;" nzTooltipTitle="Abmelden" nz-tooltip></i>
+            </nz-col>
+        </nz-row>
+    </nz-card>
 
     <ng-template #createTemplate>
         <i nz-icon nzType="plus-circle" [nzTheme]="'twotone'" [nzTwotoneColor]="'#084C61'" style="font-size: 50px;"></i>
     </ng-template>
     <ng-template #statisticTemplate>
         <i nz-icon nzType="fund" [nzTheme]="'twotone'" [nzTwotoneColor]="'#084C61'" style="font-size: 50px;"></i>
-    </ng-template> 
+    </ng-template>
+    <ng-template #dropboxTemplate>
+        <i nz-icon nzType="cloud" [nzTheme]="'twotone'" [nzTwotoneColor]="'#084C61'" style="font-size: 50px;"></i>
+    </ng-template>
+    <ng-template #mastodonTemplate>
+        <i nz-icon nzType="idcard" [nzTheme]="'twotone'" [nzTwotoneColor]="'#084C61'" style="font-size: 50px;"></i>
+    </ng-template>
 </div>
 <br>
 <div class="card">
@@ -57,3 +98,24 @@
         </tbody>
     </nz-table>
 </div>
+
+
+<nz-modal [(nzVisible)]="dropboxIsVisible" nzTitle="Dropbox Authentifizierung" (nzOnCancel)="handleDropboxCancel()">
+    <ng-container *nzModalContent>
+        <p>Rufen Sie die Authentifizierungs Seite von Dropbox auf, um Ihre Eingaben mit der Cloud zu synchronisieren. Unter <a href="{{ dropboxUrl }}" target="_blank">WatchList autorisieren</a> erhalten Sie einen Authorization Code, welchen Sie in das untere Eingabefeld eingeben müssen.</p>
+        <p>Eingabe des Authorization Codes:</p>
+        <form #record="ngForm" nz-form [nzLayout]="'vertical'">
+            <nz-form-item>
+                <input type="text" name="authCode" placeholder="Authorization Code" ngModel="{{ authCode }}">
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-control [nzOffset]="18">
+                    <button nz-button nzType="primary" (click)="handleDropboxOk(record.value)" id="auth">Authorisieren</button>
+                </nz-form-control>
+            </nz-form-item>
+        </form>
+    </ng-container>
+    <div *nzModalFooter>
+    <button nz-button nzType="default" (click)="handleDropboxCancel()">Nicht authorisieren</button>
+    </div>
+</nz-modal>

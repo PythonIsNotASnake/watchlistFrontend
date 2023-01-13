@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Axios } from 'axios';
+import axios, { Axios } from 'axios';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { NzTableQueryParams } from 'ng-zorro-antd/table';
+import { AppConfigService } from '../../app.config.service';
 
 @Component({
   selector: 'app-overview',
@@ -19,14 +20,26 @@ export class OverviewComponent implements OnInit {
   public records: any[] = [];
   public genres = [];
 
+  public dropboxIsVisible = true;
+  authCode?: string;
+
+  public baseUrl = '';
+  public dropboxUrl = '';
+  public mastodonUrl = '';
+
   ngOnInit(): void {
+    this.baseUrl = this.config.baseApi;
+    this.dropboxUrl = this.config.dropboxUrl;
+    this.mastodonUrl = this.config.mastodonUrl;
+
     this.getGenres();
+    this.isDropboxAuthorized();
   }
 
   getGenres() {
     const axios = require('axios').default;
     const instance = axios.create({
-      baseURL: 'http://192.168.178.29:8080',
+      baseURL: 'http://localhost:8080',
       timeout: 1000,
     });
     instance.get('/genres')
@@ -45,7 +58,7 @@ export class OverviewComponent implements OnInit {
   async deleteRecord(id: string) {
     const axios = require('axios').default;
     const instance = axios.create({
-      baseURL: 'http://192.168.178.29:8080',
+      baseURL: 'http://localhost:8080',
     });
     try {
       await instance.delete('/records/' + id);
@@ -72,7 +85,7 @@ export class OverviewComponent implements OnInit {
     this.limit = pageSize;
     const axios = require('axios').default;
     const instance = axios.create({
-      baseURL: 'http://192.168.178.29:8080',
+      baseURL: 'http://localhost:8080',
     });
     instance.get('/records/?sortDirection=' + this.sortDirection + '&sortValue=' + this.sortValue + '&start=' + (pageIndex-1) + '&limit=' + pageSize)
     .then((response: any) => {
@@ -93,6 +106,154 @@ export class OverviewComponent implements OnInit {
     this.loadDataFromServer(pageIndex, pageSize);
   }
 
-  constructor(private notification: NzNotificationService) {}
+  isDropboxAuthorized(): void {
+    const axios = require('axios').default;
+    const instance = axios.create({
+      baseURL: 'http://localhost:8080',
+      timeout: 1000,
+    });
+    instance.get('/dropbox/authorized')
+    .then((response: any) => {
+      this.dropboxIsVisible = !response.data;
+    })
+    .catch(function (error: any) {
+      // handle error
+      console.log(error);
+    })
+    .then(function () {
+      // always executed
+    });
+  }
+
+  async handleDropboxOk(auth: any) {
+    this.authCode = auth.authCode;
+    const data = {"authorizationCode": auth.authCode};
+    
+    try {
+      const response = await axios.post('http://localhost:8080/dropbox/authorize', data);
+      if (response.data) {
+        this.notification.create(
+          'success',
+          'Authorisiert',
+          'Sie haben WatchList erfolgreich mit Dropbox verknüpft.',
+          {
+            nzAnimate: true,
+            nzClass: 'notification'
+          }
+        );
+      } else {
+        this.notification.create(
+          'error',
+          'Nicht authorisiert',
+          'Etwas ist schief gelaufen. Leider konnte WatchList nicht mit Ihrer Dropbox verknüpft werden.',
+          {
+            nzAnimate: true,
+            nzClass: 'notification'
+          }
+        );
+      }
+      this.dropboxIsVisible = false;
+    } catch (error) {
+      console.error(error);
+      this.dropboxIsVisible = true;
+      this.notification.create(
+        'error',
+        'Nicht authorisiert',
+        'Etwas ist schief gelaufen. Leider konnte WatchList nicht mit Ihrer Dropbox verknüpft werden.',
+        {
+          nzAnimate: true,
+          nzClass: 'notification'
+        }
+      );
+    }
+  }
+
+  handleDropboxCancel(): void {
+    this.dropboxIsVisible = false;
+  }
+
+  setDropboxVisible(): void {
+    this.dropboxIsVisible = true;
+  }
+
+  async storeInDropbox() {
+    try {
+      const response = await axios.post('http://localhost:8080/backups/store');
+      const status = response.status;
+      if (status === 200 || status === 201) {
+        this.notification.create(
+          'success',
+          'Gesichert',
+          'Backup wurde erfolgreich erstellt.',
+          {
+            nzAnimate: true,
+            nzClass: 'notification'
+          }
+        );
+      } else {
+        this.notification.create(
+          'error',
+          'Backup fehlgeschlagen',
+          'Etwas ist schief gelaufen. Leider konnte kein Backup erzeugt werden.',
+          {
+            nzAnimate: true,
+            nzClass: 'notification'
+          }
+        );
+      }
+    } catch (error) {
+      console.error(error);
+      this.notification.create(
+        'error',
+        'Backup fehlgeschlagen',
+        'Etwas ist schief gelaufen. Leider konnte kein Backup erzeugt werden.',
+        {
+          nzAnimate: true,
+          nzClass: 'notification'
+        }
+      );
+    }
+  }
+
+  async restoreFromDropbox() {
+    try {
+      const response = await axios.post('http://localhost:8080/backups/restore');
+      const status = response.status;
+      if (status === 200 || status === 201) {
+        this.notification.create(
+          'success',
+          'Wiederhergestellt',
+          'Backup wurde erfolgreich eingespielt. Bitte laden Sie die Seite neu.',
+          {
+            nzAnimate: true,
+            nzClass: 'notification'
+          }
+        );
+      } else {
+        this.notification.create(
+          'error',
+          'Wiederherstellen fehlgeschlagen',
+          'Etwas ist schief gelaufen. Leider konnte keine Daten wiederhergestellt werden.',
+          {
+            nzAnimate: true,
+            nzClass: 'notification'
+          }
+        );
+      }
+    } catch (error) {
+      console.error(error);
+      this.notification.create(
+        'error',
+          'Wiederherstellen fehlgeschlagen',
+          'Etwas ist schief gelaufen. Leider konnte keine Daten wiederhergestellt werden.',
+        {
+          nzAnimate: true,
+          nzClass: 'notification'
+        }
+      );
+    }
+  }
+
+  constructor(private notification: NzNotificationService, private config: AppConfigService) {}
   
 }

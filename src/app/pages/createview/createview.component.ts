@@ -42,7 +42,7 @@ export class CreateviewComponent implements OnInit {
 
  async getRecord(id: String) {
     try {
-      const response = await axios.get('http://192.168.178.29:8080/records/' + id);
+      const response = await axios.get('http://localhost:8080/records/' + id);
       console.log(response);
       this.title = response.data.title;
       this.description = response.data.description;
@@ -65,7 +65,7 @@ export class CreateviewComponent implements OnInit {
     const data = {"title": record.title, "description": record.description, "genre": record.genre, "link": this.youtubeStartUrl + record.url};
     
     try {
-      const response = await axios.post('http://192.168.178.29:8080/records', data);
+      const response = await axios.post('http://localhost:8080/records', data);
       console.log(response);
       this.id = response.data.data.id;
       this.isLoading = false;
@@ -90,7 +90,7 @@ export class CreateviewComponent implements OnInit {
     const data = {"title": record.title, "description": record.description, "genre": record.genre, "link": this.youtubeStartUrl + record.url};
     
     try {
-      const response = await axios.put('http://192.168.178.29:8080/records/' + this.id, data);
+      const response = await axios.put('http://localhost:8080/records/' + this.id, data);
       console.log(response);
       this.isLoading = false;
       this.notification.create(

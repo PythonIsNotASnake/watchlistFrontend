@@ -9,15 +9,28 @@
     flex-grow: 1;
     padding-top: 10px;
 }
+button {
+    margin-right: 8px;
+}
+#auth {
+    background-color: #084C61;
+    border-color: #084C61;
+}
 #create {
     background-color: #E3B505;
 }
 #second {
     background-color: #4F6D7A;
 }
-#third {
+#creation {
     background-color: #DB504A;
 }
-#fourth {
+#statistic {
     background-color: #56A3A6;
+}
+#dropbox {
+    background-color: #c6f4fa;
+}
+#mastodon {
+    background-color: #6364ff;
 }
