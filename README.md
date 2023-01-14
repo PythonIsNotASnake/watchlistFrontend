@@ -3,7 +3,7 @@
 # Deployment
 
 ## Apache Web Server
-Install Apache Web Server.  
+Install Apache Web Server with e.g. "sudo apt install apache2" on debian based systems (Debian, Ubuntu, Raspberry Pi OS etc.).  
 Enable Apaches Rewrite Mode in Terminal with "sudo a2enmod rewrite"  
 and restart Apache2 with "systemctl restart apache2"  
 In project directory use following commands.  
