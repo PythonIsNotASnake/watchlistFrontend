@@ -22,7 +22,8 @@ export class OverviewComponent implements OnInit {
   public records: any[] = [];
   public genres = [];
 
-  public dropboxIsVisible = true;
+  public dropboxIsVisible = false;
+  public dropboxIsLoggedIn = false;
   authCode?: string;
 
   public baseUrl = '';
@@ -109,7 +110,12 @@ export class OverviewComponent implements OnInit {
   }
 
   isDropboxAuthorized(): void {
-    this.dropboxIsVisible = !this.dropboxLoginService.isLoggedIn();
+    this.dropboxIsLoggedIn = this.dropboxLoginService.isLoggedIn();
+  }
+
+  logoutDropbox() {
+    this.dropboxLoginService.clearLoginTimestamp();
+    this.dropboxIsLoggedIn = false;
   }
 
   async handleDropboxOk(auth: any) {
@@ -129,6 +135,7 @@ export class OverviewComponent implements OnInit {
           }
         );
         this.dropboxLoginService.saveLoginTimestamp();
+        this.dropboxIsLoggedIn = true;
       } else {
         this.notification.create(
           'error',
@@ -139,6 +146,7 @@ export class OverviewComponent implements OnInit {
             nzClass: 'notification'
           }
         );
+        this.dropboxIsLoggedIn = false;
       }
       this.dropboxIsVisible = false;
     } catch (error) {
@@ -153,6 +161,7 @@ export class OverviewComponent implements OnInit {
           nzClass: 'notification'
         }
       );
+      this.dropboxIsLoggedIn = false;
     }
   }
 

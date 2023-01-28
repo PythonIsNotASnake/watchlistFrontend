@@ -23,10 +23,10 @@
         <nz-card-meta
             nzTitle="Dropbox"
         ></nz-card-meta>
-        <nz-row [nzGutter]="16">
+        <nz-row [nzGutter]="16" *ngIf="dropboxIsLoggedIn">
             <nz-col [nzSpan]="8" style="text-align: center;">
                 <br/>
-                <i nz-icon nzType="cloud-server" [nzTheme]="'outline'" style="font-size: 50px; cursor: pointer;" (click)="setDropboxVisible()" nzTooltipTitle="Authorisieren" nz-tooltip></i>
+                <i nz-icon nzType="logout" [nzTheme]="'outline'" style="font-size: 50px; cursor: pointer;" (click)="logoutDropbox()" nzTooltipTitle="Logout" nz-tooltip></i>
             </nz-col>
             <nz-col [nzSpan]="8" style="text-align: center;">
                 <br/>
@@ -35,6 +35,12 @@
             <nz-col [nzSpan]="8" style="text-align: center;">
                 <br/>
                 <i nz-icon nzType="cloud-download" [nzTheme]="'outline'" style="font-size: 50px; cursor: pointer;" (click)="restoreFromDropbox()" nzTooltipTitle="Daten aus Cloud wiederherstellen" nz-tooltip></i>
+            </nz-col>
+        </nz-row>
+        <nz-row [nzGutter]="16" *ngIf="!dropboxIsLoggedIn">
+            <nz-col [nzSpan]="8" style="text-align: center;">
+                <br/>
+                <i nz-icon nzType="login" [nzTheme]="'outline'" style="font-size: 50px; cursor: pointer;" (click)="setDropboxVisible()" nzTooltipTitle="Login" nz-tooltip></i>
             </nz-col>
         </nz-row>
     </nz-card>
