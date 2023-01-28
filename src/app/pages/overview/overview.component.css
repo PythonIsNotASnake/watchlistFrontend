@@ -24,13 +24,17 @@ button {
 }
 #creation {
     background-color: #DB504A;
+    width: 50px;
 }
 #statistic {
     background-color: #56A3A6;
+    width: 50px;
 }
 #dropbox {
     background-color: #c6f4fa;
+    width: 50px;
 }
 #mastodon {
     background-color: #6364ff;
+    width: 50px;
 }
