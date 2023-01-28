@@ -7,7 +7,10 @@ import { HttpClient } from '@angular/common/http';
 export class AppConfigService {
   public baseApi: string = "";
   public dropboxUrl: string = "";
+  public dropboxClientId: string = "";
   public mastodonUrl: string = "";
+  public mastodonClientId: string = "";
+  public mastodonRedirectUri: string = "";
 
 	constructor(private http: HttpClient) {}
 

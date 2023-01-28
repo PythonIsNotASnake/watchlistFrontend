@@ -23,13 +23,9 @@ export class CreateviewComponent implements OnInit {
   youtubeStartUrl = "https://www.youtube.com/embed/";
 
   public baseUrl = '';
-  public dropboxUrl = '';
-  public mastodonUrl = '';
 
   ngOnInit(): void {
     this.baseUrl = this.config.baseApi;
-    this.dropboxUrl = this.config.dropboxUrl;
-    this.mastodonUrl = this.config.mastodonUrl;
 
     this.route.paramMap.subscribe(params => {
       this.id = params.get("id")

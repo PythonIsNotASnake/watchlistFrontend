@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import axios, { Axios } from 'axios';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { NzTableQueryParams } from 'ng-zorro-antd/table';
+import { BaseApiService } from 'src/app/services/base.api.service';
+import { DropboxLoginService } from 'src/app/services/dropbox.login.service';
 import { AppConfigService } from '../../app.config.service';
 
 @Component({
@@ -29,8 +31,8 @@ export class OverviewComponent implements OnInit {
 
   ngOnInit(): void {
     this.baseUrl = this.config.baseApi;
-    this.dropboxUrl = this.config.dropboxUrl;
-    this.mastodonUrl = this.config.mastodonUrl;
+    this.dropboxUrl = this.config.dropboxUrl + "&client_id=" + this.config.dropboxClientId;
+    this.mastodonUrl = this.config.mastodonUrl + "&client_id=" + this.config.mastodonClientId + "&redirect_uri=" + this.config.mastodonRedirectUri;
 
     this.getGenres();
     this.isDropboxAuthorized();
@@ -107,22 +109,7 @@ export class OverviewComponent implements OnInit {
   }
 
   isDropboxAuthorized(): void {
-    const axios = require('axios').default;
-    const instance = axios.create({
-      baseURL: this.baseUrl,
-      timeout: 1000,
-    });
-    instance.get('/dropbox/authorized')
-    .then((response: any) => {
-      this.dropboxIsVisible = !response.data;
-    })
-    .catch(function (error: any) {
-      // handle error
-      console.log(error);
-    })
-    .then(function () {
-      // always executed
-    });
+    this.dropboxIsVisible = !this.dropboxLoginService.isLoggedIn();
   }
 
   async handleDropboxOk(auth: any) {
@@ -141,6 +128,7 @@ export class OverviewComponent implements OnInit {
             nzClass: 'notification'
           }
         );
+        this.dropboxLoginService.saveLoginTimestamp();
       } else {
         this.notification.create(
           'error',
@@ -254,6 +242,10 @@ export class OverviewComponent implements OnInit {
     }
   }
 
-  constructor(private notification: NzNotificationService, private config: AppConfigService) {}
+  constructor(
+    private notification: NzNotificationService, 
+    private config: AppConfigService, 
+    private baseApi: BaseApiService, 
+    private dropboxLoginService: DropboxLoginService) {}
   
 }
