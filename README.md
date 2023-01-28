@@ -2,6 +2,16 @@
 
 # Deployment
 
+## Configure app.config.json
+Copy the file app.config.json.dist in /src/assets/ and rename the copy to app.config.json  
+Fill each property to get all functions of watchlist.  
+baseApi is the Url of your deployed watchlist service. Finde the project on https://github.com/PythonIsNotASnake/watchlistService .  
+dropboxUrl is the defined api of dropbox cloud service. This property must not be changed.  
+dropboxClientId is the id of your dropbox application. You can build a new dropbox application on the dropbox website and can find your dropbox client id there.  
+mastodonUrl is the defined api of mastodon. It is important to change the instance at the beginning of the url to the instance of your account.  
+mastodonClientId  is the id of your mastodon application. You can build a new mastodon application on the mastodon website of your instance and can find your mastodon client id there.  
+mastodonRedirectUri is the url to link the client after login on mastodon. If you don't want to get redirected don't change this property.  
+
 ## Apache Web Server
 Install Apache Web Server with e.g. "sudo apt install apache2" on debian based systems (Debian, Ubuntu, Raspberry Pi OS etc.).  
 Enable Apaches Rewrite Mode in Terminal with "sudo a2enmod rewrite"  
