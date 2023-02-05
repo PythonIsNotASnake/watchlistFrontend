@@ -77,6 +77,17 @@
 </div>
 <br>
 <div class="card">
+    <form #searchInput="ngForm" nz-form style="margin-left: auto; margin-right: auto; width: 500px;">
+        <nz-input-group [nzSuffix]="suffixIconSearch">
+            <input name="filterTitle" (keyup)="search(searchInput.value)" ngModel="{{ filterTitle }}" type="text" nz-input placeholder="Suchen..." />
+        </nz-input-group>
+        <ng-template #suffixIconSearch>
+            <span (click)="search(searchInput.value)" nz-icon nzType="search"></span>
+        </ng-template>
+    </form>
+
+    <br/>
+
     <nz-table  #basicTable nzShowPagination [nzData]="records" [nzTotal]="total"
     [nzFrontPagination]="false"
     [nzPageSize]="limit"

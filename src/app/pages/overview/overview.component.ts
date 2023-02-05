@@ -21,6 +21,7 @@ export class OverviewComponent implements OnInit {
   public total = 10;
   public records: any[] = [];
   public genres = [];
+  public filterTitle = '';
 
   public dropboxIsVisible = false;
   public dropboxIsLoggedIn = false;
@@ -90,7 +91,7 @@ export class OverviewComponent implements OnInit {
     const instance = axios.create({
       baseURL: this.baseUrl,
     });
-    instance.get('/records/?sortDirection=' + this.sortDirection + '&sortValue=' + this.sortValue + '&start=' + (pageIndex-1) + '&limit=' + pageSize)
+    instance.get('/records/?sortDirection=' + this.sortDirection + '&sortValue=' + this.sortValue + '&start=' + (pageIndex-1) + '&limit=' + pageSize + '&filterTitle=' + this.filterTitle)
     .then((response: any) => {
       this.records = response.data.data;
       this.total = response.data.total;
@@ -102,6 +103,12 @@ export class OverviewComponent implements OnInit {
     .then(function () {
       // always executed
     });
+  }
+
+  search(searchInput: any) {
+    console.log(searchInput);
+    this.filterTitle = searchInput.filterTitle;
+    this.loadDataFromServer(1, 10);
   }
 
   onQueryParamsChange(params: NzTableQueryParams): void {

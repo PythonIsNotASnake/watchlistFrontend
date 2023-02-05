@@ -2,7 +2,7 @@
     "baseApi": "http://localhost:8080",
     "dropboxUrl": "https://www.dropbox.com/oauth2/authorize?response_type=code",
     "dropboxClientId": "",
-    "mastodonUrl": "https://nrw.social/oauth/authorize?response_type=code",
+    "mastodonUrl": "https://mastodon.social/oauth/authorize?response_type=code",
     "mastodonClientId": "",
     "mastodonRedirectUri": "urn:ietf:wg:oauth:2.0:oob"
 }
