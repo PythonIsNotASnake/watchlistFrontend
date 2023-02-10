@@ -16,6 +16,16 @@ button {
     background-color: #084C61;
     border-color: #084C61;
 }
+#mastodonbutton {
+    background-color: #595aff;
+    border-color: #595aff;
+    color: white;
+}
+#mastodonbutton:disabled {
+    background-color: #858afa;
+    border-color: #858afa;
+    color: lightgray;
+}
 #create {
     background-color: #E3B505;
 }

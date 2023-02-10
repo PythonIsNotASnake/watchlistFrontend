@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
-import { Axios } from 'axios';
+import axios, { Axios } from 'axios';
+import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { AppConfigService } from '../../app.config.service';
 
 @Component({
@@ -19,6 +20,7 @@ export class DetailviewComponent implements OnInit {
   genre = "";
 
   public baseUrl = '';
+  mastodonIsLoggedIn = false;
 
   ngOnInit(): void {
     this.baseUrl = this.config.baseApi;
@@ -32,6 +34,7 @@ export class DetailviewComponent implements OnInit {
     });
 
     this.getRecord(instance);
+    this.isMastodonLoggedIn();
   }
 
   async getRecord(instance: any) {
@@ -48,9 +51,61 @@ export class DetailviewComponent implements OnInit {
     }
   }
 
+  async isMastodonLoggedIn() {
+    try {
+      const response = await axios.get(this.baseUrl + '/mastodon/authorized');
+      this.mastodonIsLoggedIn = response.data;
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  async shareOnMastodon() {
+    const data = {
+      "recordId": this.id
+    };
+    try {
+      const response = await axios.post(this.baseUrl + '/mastodon/toot', data);
+
+      if (response.data) {
+        this.notification.create(
+          'success',
+          'Toot',
+          'Inhalt wurde auf Mastodon geteilt.',
+          {
+            nzAnimate: true,
+            nzClass: 'notification'
+          }
+        );
+      } else {
+        this.notification.create(
+          'error',
+          'Nicht geteilt',
+          'Inhalt konnte nicht auf Mastodon geteilt werden.',
+          {
+            nzAnimate: true,
+            nzClass: 'notification'
+          }
+        );
+      }
+    } catch (error) {
+      console.error(error);
+      this.notification.create(
+        'error',
+        'Nicht geteilt',
+        'Inhalt konnte nicht auf Mastodon geteilt werden.',
+        {
+          nzAnimate: true,
+          nzClass: 'notification'
+        }
+      );
+    }
+  }
+
   constructor(
     private sanitizer: DomSanitizer,
     private route: ActivatedRoute,
+    private notification: NzNotificationService,
     private config: AppConfigService) {}
 
 }

@@ -5,7 +5,7 @@
 ## Configure app.config.json
 Copy the file app.config.json.dist in /src/assets/ and rename the copy to app.config.json  
 Fill each property to get all functions of watchlist.  
-baseApi is the Url of your deployed watchlist service. Finde the project on https://github.com/PythonIsNotASnake/watchlistService .  
+baseApi is the Url of your deployed watchlist service. Find the project on https://github.com/PythonIsNotASnake/watchlistService .  
 dropboxUrl is the defined api of dropbox cloud service. This property must not be changed.  
 dropboxClientId is the id of your dropbox application. You can build a new dropbox application on the dropbox website and can find your dropbox client id there.  
 mastodonUrl is the defined api of mastodon. It is important to change the instance at the beginning of the url to the instance of your account.  

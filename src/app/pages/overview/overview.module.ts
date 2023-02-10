@@ -14,6 +14,7 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+import { NzStepsModule } from 'ng-zorro-antd/steps';
 
 import { OverviewRoutingModule } from './overview-routing.module';
 
@@ -38,7 +39,8 @@ import { NzPaginationModule } from 'ng-zorro-antd/pagination';
     NzButtonModule,
     NzInputModule,
     NzFormModule,
-    NzToolTipModule
+    NzToolTipModule,
+    NzStepsModule
   ],
   declarations: [OverviewComponent],
   exports: [OverviewComponent]

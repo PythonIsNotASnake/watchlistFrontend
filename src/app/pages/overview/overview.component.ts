@@ -25,7 +25,14 @@ export class OverviewComponent implements OnInit {
 
   public dropboxIsVisible = false;
   public dropboxIsLoggedIn = false;
-  authCode?: string;
+  dropboxAuthCode?: string;
+
+  public mastodonIsVisible = false;
+  public mastodonIsLoggedIn = false;
+  public mastodonProgress: number = 0;
+  mastodonAuthCode?: string;
+  mastodonBaseUrl?: string;
+  mastodonFullUrl?: string;
 
   public baseUrl = '';
   public dropboxUrl = '';
@@ -38,6 +45,7 @@ export class OverviewComponent implements OnInit {
 
     this.getGenres();
     this.isDropboxAuthorized();
+    this.isMastodonAuthorized();
   }
 
   getGenres() {
@@ -106,7 +114,6 @@ export class OverviewComponent implements OnInit {
   }
 
   search(searchInput: any) {
-    console.log(searchInput);
     this.filterTitle = searchInput.filterTitle;
     this.loadDataFromServer(1, 10);
   }
@@ -126,8 +133,8 @@ export class OverviewComponent implements OnInit {
   }
 
   async handleDropboxOk(auth: any) {
-    this.authCode = auth.authCode;
-    const data = {"authorizationCode": auth.authCode};
+    this.dropboxAuthCode = auth.dropboxAuthCode;
+    const data = {"authorizationCode": auth.dropboxAuthCode};
     
     try {
       const response = await axios.post(this.baseUrl + '/dropbox/authorize', data);
@@ -256,6 +263,101 @@ export class OverviewComponent implements OnInit {
         }
       );
     }
+  }
+
+  async isMastodonAuthorized() {
+    try {
+      const response = await axios.get(this.baseUrl + '/mastodon/authorized');
+      this.mastodonIsLoggedIn = response.data;
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  async logoutMastodon() {
+    try {
+      const response = await axios.post(this.baseUrl + '/mastodon/logout');
+      this.mastodonIsLoggedIn = !response.data;
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  setMastodonProgress(progress: number) {
+    this.mastodonProgress = progress;
+  }
+
+  handleMastodonBaseUrl(urlForm: any) {
+    this.mastodonBaseUrl = urlForm.mastodonBaseUrl;
+    if (!this.mastodonBaseUrl?.endsWith("/")) {
+      this.mastodonBaseUrl = this.mastodonBaseUrl + "/";
+    }
+    this.mastodonFullUrl = this.mastodonBaseUrl + this.mastodonUrl;
+    this.setMastodonProgress(1);
+  }
+
+  async handleMastodonOk(auth: any) {
+    this.mastodonAuthCode = auth.mastodonAuthCode;
+    const data = {
+      "authorizationCode": this.mastodonAuthCode, 
+      "mastodonUrl": this.mastodonBaseUrl
+    };
+    
+    try {
+      const response = await axios.post(this.baseUrl + '/mastodon/authorize', data);
+      if (response.data) {
+        this.notification.create(
+          'success',
+          'Authorisiert',
+          'Sie haben WatchList erfolgreich mit Mastodon verknüpft.',
+          {
+            nzAnimate: true,
+            nzClass: 'notification'
+          }
+        );
+        this.mastodonIsLoggedIn = true;
+        this.setMastodonProgress(2);
+      } else {
+        this.notification.create(
+          'error',
+          'Nicht authorisiert',
+          'Etwas ist schief gelaufen. Leider konnte WatchList nicht mit Ihrem Mastodon Account verknüpft werden.',
+          {
+            nzAnimate: true,
+            nzClass: 'notification'
+          }
+        );
+        this.mastodonIsLoggedIn = false;
+      }
+    } catch (error) {
+      console.error(error);
+      this.mastodonIsVisible = true;
+      this.notification.create(
+        'error',
+        'Nicht authorisiert',
+        'Etwas ist schief gelaufen. Leider konnte WatchList nicht mit Ihrem Mastodon Account verknüpft werden.',
+        {
+          nzAnimate: true,
+          nzClass: 'notification'
+        }
+      );
+      this.mastodonIsLoggedIn = false;
+    }
+  }
+
+  handleMastodonFinish(): void {
+    this.setMastodonProgress(0);
+    this.mastodonIsVisible = false;
+  }
+
+  handleMastodonCancel(): void {
+    this.mastodonIsLoggedIn = false;
+    this.setMastodonProgress(0);
+    this.mastodonIsVisible = false;
+  }
+
+  setMastodonVisible(): void {
+    this.mastodonIsVisible = true;
   }
 
   constructor(

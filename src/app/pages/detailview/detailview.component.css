@@ -1,3 +1,18 @@
 button {
   margin-right: 8px;
 }
+
+#mastodonShare {
+  background-color: #595aff;
+  border-color: #595aff;
+  color: white;
+  border-radius: 5px;
+}
+#mastodonShare:disabled {
+  background-color: #858afa;
+  border-color: #858afa;
+  color: lightgray;
+}
+#mastodonShare:hover {
+  background-color: #858afa;
+}

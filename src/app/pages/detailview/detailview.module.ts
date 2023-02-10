@@ -6,13 +6,15 @@ import { DetailviewComponent } from './detailview.component';
 
 import { NzDescriptionsModule } from 'ng-zorro-antd/descriptions';
 import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzNotificationModule } from 'ng-zorro-antd/notification';
 
 
 @NgModule({
   imports: [
     DetailviewRoutingModule,
     NzDescriptionsModule,
-    NzButtonModule
+    NzButtonModule,
+    NzNotificationModule
   ],
   declarations: [DetailviewComponent],
   exports: [DetailviewComponent]
