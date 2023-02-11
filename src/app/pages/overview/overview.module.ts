@@ -21,6 +21,8 @@ import { OverviewRoutingModule } from './overview-routing.module';
 import { OverviewComponent } from './overview.component';
 import { NzPaginationModule } from 'ng-zorro-antd/pagination';
 
+import { NgxEchartsModule } from 'ngx-echarts';
+
 
 @NgModule({
   imports: [
@@ -40,7 +42,10 @@ import { NzPaginationModule } from 'ng-zorro-antd/pagination';
     NzInputModule,
     NzFormModule,
     NzToolTipModule,
-    NzStepsModule
+    NzStepsModule,
+    NgxEchartsModule.forRoot({
+      echarts: () => import('echarts')
+    })
   ],
   declarations: [OverviewComponent],
   exports: [OverviewComponent]

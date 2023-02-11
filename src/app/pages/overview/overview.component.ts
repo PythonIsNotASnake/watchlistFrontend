@@ -14,6 +14,8 @@ import { AppConfigService } from '../../app.config.service';
 
 export class OverviewComponent implements OnInit {
 
+  options: any;
+
   public sortDirection = 'ASC';
   public sortValue = 'title';
   public start = 1;
@@ -46,6 +48,38 @@ export class OverviewComponent implements OnInit {
     this.getGenres();
     this.isDropboxAuthorized();
     this.isMastodonAuthorized();
+
+    // TODO: remove dummy data
+    const data = [
+      { value: 12, name: 'Sport'},
+      { value: 16, name: 'Action'},
+      { value: 18, name: 'Slice of Life'},
+      { value: 12, name: 'Film'},
+      { value: 2, name: 'MMORPG'},
+      { value: 8, name: 'Andere'},
+    ];
+
+    this.options = {
+      tooltip: {
+        trigger: 'item'
+      },
+      series: [
+        {
+          name: 'Genre',
+          type: 'pie',
+          radius: '100%',
+          avoidLabelOverlap: false,
+          label: {
+            show: false,
+            position: 'center'
+          },
+          labelLine: {
+            show: false
+          },
+          data: data,
+        }
+      ],
+    }
   }
 
   getGenres() {
