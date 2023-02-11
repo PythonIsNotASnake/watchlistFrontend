@@ -86,3 +86,11 @@ nz-content {
   justify-content: center;
   gap: 20px;
 }
+
+.greatcontainer {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  gap: 10px;
+}

@@ -1,57 +1,7 @@
-.container {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: nowrap;
-    justify-content: space-evenly;
-    gap: 10px;
-}
-.greatcontainer {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: space-between;
-    gap: 10px;
-}
 .defaultcard {
     flex-grow: 1;
     padding-top: 10px;
 }
 button {
     margin-right: 8px;
-}
-#auth {
-    background-color: #084C61;
-    border-color: #084C61;
-}
-#mastodonbutton {
-    background-color: #595aff;
-    border-color: #595aff;
-    color: white;
-}
-#mastodonbutton:disabled {
-    background-color: #858afa;
-    border-color: #858afa;
-    color: lightgray;
-}
-#create {
-    background-color: #E3B505;
-}
-#second {
-    background-color: #4F6D7A;
-}
-#creation {
-    background-color: #DB504A;
-    height: 190px;
-}
-#statistic {
-    background-color: #56A3A6;
-    height: 190px;
-}
-#dropbox {
-    background-color: #c6f4fa;
-    height: 190px;
-}
-#mastodon {
-    background-color: #6364ff;
-    height: 190px;
 }

@@ -1,223 +1,41 @@
-<div class="greatcontainer">
-
-    <div class="card" style="width: 70%; display: flex;
-    flex-direction: column;
-    flex-wrap: nowrap;
-    justify-content: space-evenly;">
-        <div>
-            <form #searchInput="ngForm" nz-form style="margin: auto; width: 500px;">
-                <nz-input-group [nzSuffix]="suffixIconSearch">
-                    <input name="filterTitle" (keyup)="search(searchInput.value)" ngModel="{{ filterTitle }}" type="text" nz-input placeholder="Suchen..." />
-                </nz-input-group>
-                <ng-template #suffixIconSearch>
-                    <span (click)="search(searchInput.value)" nz-icon nzType="search"></span>
-                </ng-template>
-            </form>
-        </div>
-        <div>
-            <nz-table  #basicTable nzShowPagination [nzData]="records" [nzTotal]="total"
-            [nzFrontPagination]="false"
-            [nzPageSize]="limit"
-            [nzPageIndex]="start"
-            (nzQueryParams)="onQueryParamsChange($event)">
-                <thead>
-                    <tr>
-                        <th>Titel</th>
-                        <th>Genre</th>
-                        <th>Aktionen</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let data of basicTable.data">
-                        <td routerLink="/detailview/{{ data.id }}">{{ data.title }}</td>
-                        <td routerLink="/detailview/{{ data.id }}">{{ data.genre }}</td>
-                        <td>
-                            <i routerLink="/createview/{{ data.id }}" nz-icon nzType="edit" [nzTheme]="'twotone'" [nzTwotoneColor]="'brown'"></i>
-                            <nz-divider nzType="vertical"></nz-divider>
-                            <i (click)="deleteRecord(data.id)" nz-icon nzType="delete" [nzTheme]="'twotone'" [nzTwotoneColor]="'red'" style="cursor: pointer;"></i>
-                        </td>
-                    </tr>
-                </tbody>
-            </nz-table>
-        </div>
+<div class="card" style="height: 100%; display: flex;
+flex-direction: column;
+flex-wrap: nowrap;
+justify-content: space-evenly;">
+    <div>
+        <form #searchInput="ngForm" nz-form style="margin: auto; width: 500px;">
+            <nz-input-group [nzSuffix]="suffixIconSearch">
+                <input name="filterTitle" (keyup)="search(searchInput.value)" ngModel="{{ filterTitle }}" type="text" nz-input placeholder="Suchen..." />
+            </nz-input-group>
+            <ng-template #suffixIconSearch>
+                <span (click)="search(searchInput.value)" nz-icon nzType="search"></span>
+            </ng-template>
+        </form>
     </div>
-
-    <div class="container" style="width: 30%;">
-
-        <nz-card class="defaultcard" id="creation" [nzCover]="createTemplate" routerLink="/createview" style="cursor: pointer;">
-            <nz-card-meta
-                nzTitle="Anlegen"
-                nzDescription="Legen Sie einen neuen Eintrag an."
-            ></nz-card-meta>
-        </nz-card>
-        <nz-card class="defaultcard" id="statistic" [nzCover]="statisticTemplate">
-            <nz-card-meta
-                nzTitle="Statistik"
-            ></nz-card-meta>
-            <nz-row [nzGutter]="16">
-                <nz-col [nzSpan]="8">
-                    <nz-statistic [nzValue]="(total | number)!" [nzTitle]="'Anzahl Einträge'"></nz-statistic>
-                </nz-col>
-                <nz-col [nzSpan]="8">
-                    <nz-statistic [nzValue]="(genres.length | number)!" [nzTitle]="'Anzahl Genres'"></nz-statistic>
-                </nz-col>
-                <nz-col [nzSpan]="8">
-                    <div style="height: 100%; width: 100%;" echarts [options]="options"></div>
-                </nz-col>
-            </nz-row>
-            
-        </nz-card>
-        <nz-card class="defaultcard" id="dropbox" [nzCover]="dropboxTemplate">
-            <nz-card-meta
-                nzTitle="Dropbox"
-            ></nz-card-meta>
-            <nz-row [nzGutter]="16" *ngIf="dropboxIsLoggedIn">
-                <nz-col [nzSpan]="8" style="text-align: center;">
-                    <br/>
-                    <i nz-icon nzType="logout" [nzTheme]="'outline'" style="font-size: 50px; cursor: pointer;" (click)="logoutDropbox()" nzTooltipTitle="Logout" nz-tooltip></i>
-                </nz-col>
-                <nz-col [nzSpan]="8" style="text-align: center;">
-                    <br/>
-                    <i nz-icon nzType="cloud-upload" [nzTheme]="'outline'" style="font-size: 50px; cursor: pointer;" (click)="storeInDropbox()" nzTooltipTitle="Daten in Cloud sichern" nz-tooltip></i>
-                </nz-col>
-                <nz-col [nzSpan]="8" style="text-align: center;">
-                    <br/>
-                    <i nz-icon nzType="cloud-download" [nzTheme]="'outline'" style="font-size: 50px; cursor: pointer;" (click)="restoreFromDropbox()" nzTooltipTitle="Daten aus Cloud wiederherstellen" nz-tooltip></i>
-                </nz-col>
-            </nz-row>
-            <nz-row [nzGutter]="16" *ngIf="!dropboxIsLoggedIn">
-                <nz-col [nzSpan]="8" style="text-align: center;">
-                    <br/>
-                    <i nz-icon nzType="login" [nzTheme]="'outline'" style="font-size: 50px; cursor: pointer;" (click)="setDropboxVisible()" nzTooltipTitle="Login" nz-tooltip></i>
-                </nz-col>
-            </nz-row>
-        </nz-card>
-        <nz-card class="defaultcard" id="mastodon" [nzCover]="mastodonTemplate">
-            <nz-card-meta
-                nzTitle="Mastodon"
-            ></nz-card-meta>
-            <nz-row [nzGutter]="16"  *ngIf="!mastodonIsLoggedIn">
-                <nz-col [nzSpan]="8" style="text-align: center;">
-                    <br/>
-                    <i nz-icon nzType="login" [nzTheme]="'outline'" style="font-size: 50px; cursor: pointer;" (click)="setMastodonVisible()" nzTooltipTitle="Login" nz-tooltip></i>
-                </nz-col>
-            </nz-row>
-            <nz-row [nzGutter]="16"  *ngIf="mastodonIsLoggedIn">
-                <nz-col [nzSpan]="8" style="text-align: center;">
-                    <br/>
-                    <i nz-icon nzType="logout" [nzTheme]="'outline'" style="font-size: 50px; cursor: pointer;" (click)="logoutMastodon()" nzTooltipTitle="Logout" nz-tooltip></i>
-                </nz-col>
-            </nz-row>
-        </nz-card>
-
-        <ng-template #createTemplate>
-            <i nz-icon nzType="plus-circle" [nzTheme]="'twotone'" [nzTwotoneColor]="'#084C61'" style="font-size: 50px;"></i>
-        </ng-template>
-        <ng-template #statisticTemplate>
-            <i nz-icon nzType="fund" [nzTheme]="'twotone'" [nzTwotoneColor]="'#084C61'" style="font-size: 50px;"></i>
-        </ng-template>
-        <ng-template #dropboxTemplate>
-            <i nz-icon nzType="cloud" [nzTheme]="'twotone'" [nzTwotoneColor]="'#084C61'" style="font-size: 50px;"></i>
-        </ng-template>
-        <ng-template #mastodonTemplate>
-            <svg xmlns="http://www.w3.org/2000/svg" width="50px" height="50px" fill="white" class="bi bi-mastodon" viewBox="0 0 16 16">
-                <path d="M11.19 12.195c2.016-.24 3.77-1.475 3.99-2.603.348-1.778.32-4.339.32-4.339 0-3.47-2.286-4.488-2.286-4.488C12.062.238 10.083.017 8.027 0h-.05C5.92.017 3.942.238 2.79.765c0 0-2.285 1.017-2.285 4.488l-.002.662c-.004.64-.007 1.35.011 2.091.083 3.394.626 6.74 3.78 7.57 1.454.383 2.703.463 3.709.408 1.823-.1 2.847-.647 2.847-.647l-.06-1.317s-1.303.41-2.767.36c-1.45-.05-2.98-.156-3.215-1.928a3.614 3.614 0 0 1-.033-.496s1.424.346 3.228.428c1.103.05 2.137-.064 3.188-.189zm1.613-2.47H11.13v-4.08c0-.859-.364-1.295-1.091-1.295-.804 0-1.207.517-1.207 1.541v2.233H7.168V5.89c0-1.024-.403-1.541-1.207-1.541-.727 0-1.091.436-1.091 1.296v4.079H3.197V5.522c0-.859.22-1.541.66-2.046.456-.505 1.052-.764 1.793-.764.856 0 1.504.328 1.933.983L8 4.39l.417-.695c.429-.655 1.077-.983 1.934-.983.74 0 1.336.259 1.791.764.442.505.661 1.187.661 2.046v4.203z"/>
-            </svg>
-        </ng-template>
+    <div>
+        <nz-table  #basicTable nzShowPagination [nzData]="records" [nzTotal]="total"
+        [nzFrontPagination]="false"
+        [nzPageSize]="limit"
+        [nzPageIndex]="start"
+        (nzQueryParams)="onQueryParamsChange($event)">
+            <thead>
+                <tr>
+                    <th>Titel</th>
+                    <th>Genre</th>
+                    <th>Aktionen</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of basicTable.data">
+                    <td routerLink="/detailview/{{ data.id }}">{{ data.title }}</td>
+                    <td routerLink="/detailview/{{ data.id }}">{{ data.genre }}</td>
+                    <td>
+                        <i routerLink="/createview/{{ data.id }}" nz-icon nzType="edit" [nzTheme]="'twotone'" [nzTwotoneColor]="'brown'"></i>
+                        <nz-divider nzType="vertical"></nz-divider>
+                        <i (click)="deleteRecord(data.id)" nz-icon nzType="delete" [nzTheme]="'twotone'" [nzTwotoneColor]="'red'" style="cursor: pointer;"></i>
+                    </td>
+                </tr>
+            </tbody>
+        </nz-table>
     </div>
 </div>
-
-<nz-modal [(nzVisible)]="dropboxIsVisible" nzTitle="Dropbox Authentifizierung" (nzOnCancel)="handleDropboxCancel()">
-    <ng-container *nzModalContent>
-        <p>Rufen Sie die Authentifizierungs Seite von Dropbox auf, um Ihre Eingaben mit der Cloud zu synchronisieren. Unter <a href="{{ dropboxUrl }}" target="_blank">WatchList authorisieren</a> erhalten Sie einen Authorization Code, welchen Sie in das untere Eingabefeld eingeben müssen.</p>
-        <p>Eingabe des Authorization Codes:</p>
-        <form #record="ngForm" nz-form [nzLayout]="'vertical'">
-            <nz-form-item>
-                <input type="text" name="dropboxAuthCode" placeholder="Authorization Code" ngModel="{{ dropboxAuthCode }}">
-            </nz-form-item>
-            <nz-form-item>
-                <nz-form-control>
-                    <div style="display: flex; justify-content: end;">
-                        <button nz-button nzType="primary" (click)="handleDropboxOk(record.value)" id="auth">Authorisieren</button>
-                    </div>
-                </nz-form-control>
-            </nz-form-item>
-        </form>
-    </ng-container>
-    <div *nzModalFooter>
-    <button nz-button nzType="default" (click)="handleDropboxCancel()">Nicht authorisieren</button>
-    </div>
-</nz-modal>
-
-<nz-modal [(nzVisible)]="mastodonIsVisible" nzTitle="Mastodon Authentifizierung" (nzOnCancel)="handleMastodonCancel()">
-    <ng-container *nzModalContent>
-        <nz-steps [nzCurrent]="mastodonProgress" nzSize="small">
-            <nz-step nzTitle="Server" [nzIcon]="serverTemplate"></nz-step>
-            <nz-step nzTitle="Authentifizierung" [nzIcon]="authTemplate"></nz-step>
-            <nz-step nzTitle="Abgeschlossen" [nzIcon]="successTemplate"></nz-step>
-            <ng-template #serverTemplate>
-                <span *ngIf="mastodonProgress === 0" nz-icon nzType="edit" [nzTheme]="'twotone'" [nzTwotoneColor]="'#595aff'"></span>
-                <span *ngIf="mastodonProgress !== 0" nz-icon nzType="check-circle" [nzTheme]="'twotone'" [nzTwotoneColor]="'#595aff'"></span>
-            </ng-template>
-            <ng-template #authTemplate>
-                <span *ngIf="mastodonProgress === 0" nz-icon nzType="api" [nzTheme]="'twotone'" [nzTwotoneColor]="'#595aff'"></span>
-                <span *ngIf="mastodonProgress === 1" nz-icon nzType="edit" [nzTheme]="'twotone'" [nzTwotoneColor]="'#595aff'"></span>
-                <span *ngIf="mastodonProgress === 2" nz-icon nzType="check-circle" [nzTheme]="'twotone'" [nzTwotoneColor]="'#595aff'"></span>
-            </ng-template>
-            <ng-template #successTemplate>
-                <span *ngIf="mastodonProgress !== 2" nz-icon nzType="api" [nzTheme]="'twotone'" [nzTwotoneColor]="'#595aff'"></span>
-                <span *ngIf="mastodonProgress === 2" nz-icon>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="#595aff" class="bi bi-mastodon" viewBox="0 0 16 16">
-                        <path d="M11.19 12.195c2.016-.24 3.77-1.475 3.99-2.603.348-1.778.32-4.339.32-4.339 0-3.47-2.286-4.488-2.286-4.488C12.062.238 10.083.017 8.027 0h-.05C5.92.017 3.942.238 2.79.765c0 0-2.285 1.017-2.285 4.488l-.002.662c-.004.64-.007 1.35.011 2.091.083 3.394.626 6.74 3.78 7.57 1.454.383 2.703.463 3.709.408 1.823-.1 2.847-.647 2.847-.647l-.06-1.317s-1.303.41-2.767.36c-1.45-.05-2.98-.156-3.215-1.928a3.614 3.614 0 0 1-.033-.496s1.424.346 3.228.428c1.103.05 2.137-.064 3.188-.189zm1.613-2.47H11.13v-4.08c0-.859-.364-1.295-1.091-1.295-.804 0-1.207.517-1.207 1.541v2.233H7.168V5.89c0-1.024-.403-1.541-1.207-1.541-.727 0-1.091.436-1.091 1.296v4.079H3.197V5.522c0-.859.22-1.541.66-2.046.456-.505 1.052-.764 1.793-.764.856 0 1.504.328 1.933.983L8 4.39l.417-.695c.429-.655 1.077-.983 1.934-.983.74 0 1.336.259 1.791.764.442.505.661 1.187.661 2.046v4.203z"/>
-                    </svg>
-                </span>
-            </ng-template>
-        </nz-steps>
-        <br/>
-        <div *ngIf="mastodonProgress === 0">
-            <p>Geben Sie die Adresse Ihres Mastodon Servers an:</p>
-            <form #mastodonUrl="ngForm" nz-form [nzLayout]="'vertical'">
-                <nz-form-item>
-                    <input type="text" name="mastodonBaseUrl" required placeholder="https://mastodon.social" ngModel="{{ mastodonBaseUrl }}">
-                </nz-form-item>
-                <nz-form-item>
-                    <nz-form-control>
-                        <div style="display: flex; justify-content: end;">
-                            <button nz-button nzType="primary" (click)="handleMastodonBaseUrl(mastodonUrl.value)" id="mastodonbutton" [disabled]="!mastodonUrl.valid">Weiter</button>
-                        </div>
-                    </nz-form-control>
-                </nz-form-item>
-            </form>
-        </div>
-        <div *ngIf="mastodonProgress === 1">
-            <p>Rufen Sie die Authentifizierungs Seite von Mastodon auf, um Einträge auf Mastodon zu teilen. Unter <a href="{{ mastodonFullUrl }}" target="_blank">Mastodon authorisieren</a> erhalten Sie einen Authorization Code, welchen Sie in das untere Eingabefeld eingeben müssen.</p>
-            <p>Eingabe des Authorization Codes:</p>
-            <form #mastodonCode="ngForm" nz-form [nzLayout]="'vertical'">
-                <nz-form-item>
-                    <input type="text" name="mastodonAuthCode" required placeholder="Authorization Code" ngModel="{{ mastodonAuthCode }}">
-                </nz-form-item>
-                <nz-form-item>
-                    <nz-form-control>
-                        <div style="display: flex; justify-content: space-between;">
-                            <button nz-button nzType="primary" (click)="setMastodonProgress(0)" id="mastodonbutton">Zurück</button>
-                            <button nz-button nzType="primary" (click)="handleMastodonOk(mastodonCode.value)" id="mastodonbutton" [disabled]="!mastodonCode.valid">Authorisieren</button>
-                        </div>
-                    </nz-form-control>
-                </nz-form-item>
-            </form>
-        </div>
-        <div *ngIf="mastodonProgress === 2">
-            <p>Ihr Mastodon Account wurde erfolgreich verknüpft.</p>
-            <div style="display: flex; justify-content: end;">
-                <button nz-button nzType="primary" (click)="handleMastodonFinish()" id="mastodonbutton">Fertig</button>
-            </div>
-        </div>
-    </ng-container>
-    <div *nzModalFooter>
-        <div style="display: flex; justify-content: center;">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="#595aff" class="bi bi-mastodon" viewBox="0 0 16 16">
-                <path d="M11.19 12.195c2.016-.24 3.77-1.475 3.99-2.603.348-1.778.32-4.339.32-4.339 0-3.47-2.286-4.488-2.286-4.488C12.062.238 10.083.017 8.027 0h-.05C5.92.017 3.942.238 2.79.765c0 0-2.285 1.017-2.285 4.488l-.002.662c-.004.64-.007 1.35.011 2.091.083 3.394.626 6.74 3.78 7.57 1.454.383 2.703.463 3.709.408 1.823-.1 2.847-.647 2.847-.647l-.06-1.317s-1.303.41-2.767.36c-1.45-.05-2.98-.156-3.215-1.928a3.614 3.614 0 0 1-.033-.496s1.424.346 3.228.428c1.103.05 2.137-.064 3.188-.189zm1.613-2.47H11.13v-4.08c0-.859-.364-1.295-1.091-1.295-.804 0-1.207.517-1.207 1.541v2.233H7.168V5.89c0-1.024-.403-1.541-1.207-1.541-.727 0-1.091.436-1.091 1.296v4.079H3.197V5.522c0-.859.22-1.541.66-2.046.456-.505 1.052-.764 1.793-.764.856 0 1.504.328 1.933.983L8 4.39l.417-.695c.429-.655 1.077-.983 1.934-.983.74 0 1.336.259 1.791.764.442.505.661 1.187.661 2.046v4.203z"/>
-            </svg>
-        </div>
-    </div>
-</nz-modal>

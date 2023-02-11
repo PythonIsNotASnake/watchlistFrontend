@@ -11,7 +11,14 @@
   </nz-header>
   <nz-content>
     <!--<div class="inner-content">-->
-      <router-outlet></router-outlet>
+      <div class="greatcontainer">
+        <div class="card" style="width: 70%;">
+          <router-outlet></router-outlet>
+        </div>
+        <div style="width: 30%;">
+          <app-dashboard></app-dashboard>
+        </div>
+      </div>
     <!--</div>-->
   </nz-content>
 </nz-layout>

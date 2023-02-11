@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { NZ_I18N } from 'ng-zorro-antd/i18n';
 import { de_DE } from 'ng-zorro-antd/i18n';
 import { registerLocaleData } from '@angular/common';
@@ -16,6 +17,18 @@ import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
 import { AppConfigService } from './app.config.service';
 
+import { NzNotificationModule } from 'ng-zorro-antd/notification';
+import { NzCardModule } from 'ng-zorro-antd/card';
+import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzStatisticModule } from 'ng-zorro-antd/statistic';
+import { NzModalModule } from 'ng-zorro-antd/modal';
+import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzInputModule } from 'ng-zorro-antd/input';
+import { NzFormModule } from 'ng-zorro-antd/form';
+import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+import { NzStepsModule } from 'ng-zorro-antd/steps';
+import { NgxEchartsModule } from 'ngx-echarts';
+
 registerLocaleData(de);
 
 export function appConfigInit(appConfigService: AppConfigService) {
@@ -26,7 +39,8 @@ export function appConfigInit(appConfigService: AppConfigService) {
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,
@@ -37,7 +51,20 @@ export function appConfigInit(appConfigService: AppConfigService) {
     IconsProviderModule,
     NzLayoutModule,
     NzMenuModule,
-    NzBreadCrumbModule
+    NzBreadCrumbModule,
+    NzNotificationModule,
+    NzCardModule,
+    NzIconModule,
+    NzStatisticModule,
+    NzModalModule,
+    NzButtonModule,
+    NzInputModule,
+    NzFormModule,
+    NzToolTipModule,
+    NzStepsModule,
+    NgxEchartsModule.forRoot({
+      echarts: () => import('echarts')
+    })
   ],
   providers: [
     {
