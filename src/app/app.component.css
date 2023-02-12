@@ -94,3 +94,13 @@ nz-content {
   justify-content: space-between;
   gap: 10px;
 }
+
+::ng-deep .ant-notification-notice {
+  border-radius: 10px;
+}
+::ng-deep .ant-modal-content {
+  border-radius: 10px;
+}
+::ng-deep .ant-modal-header {
+  border-radius: 10px;
+}

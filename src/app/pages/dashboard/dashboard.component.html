@@ -6,6 +6,7 @@
             nzDescription="Legen Sie einen neuen Eintrag an."
         ></nz-card-meta>
     </nz-card>
+
     <nz-card class="defaultcard" id="statistic" [nzCover]="statisticTemplate">
         <nz-card-meta
             nzTitle="Statistik"
@@ -48,6 +49,7 @@
             </nz-col>
         </nz-row>
     </nz-card>
+
     <nz-card class="defaultcard" id="mastodon" [nzCover]="mastodonTemplate">
         <nz-card-meta
             nzTitle="Mastodon"
@@ -86,14 +88,14 @@
     <ng-container *nzModalContent>
         <p>Rufen Sie die Authentifizierungs Seite von Dropbox auf, um Ihre Eingaben mit der Cloud zu synchronisieren. Unter <a href="{{ dropboxUrl }}" target="_blank">WatchList authorisieren</a> erhalten Sie einen Authorization Code, welchen Sie in das untere Eingabefeld eingeben müssen.</p>
         <p>Eingabe des Authorization Codes:</p>
-        <form #record="ngForm" nz-form [nzLayout]="'vertical'">
+        <form #dropboxAuth="ngForm" nz-form [nzLayout]="'vertical'">
             <nz-form-item>
-                <input type="text" name="dropboxAuthCode" placeholder="Authorization Code" ngModel="{{ dropboxAuthCode }}">
+                <input type="text" name="dropboxAuthCode" required placeholder="Authorization Code" ngModel="{{ dropboxAuthCode }}" style="border-radius: 5px;">
             </nz-form-item>
             <nz-form-item>
                 <nz-form-control>
                     <div style="display: flex; justify-content: end;">
-                        <button nz-button nzType="primary" (click)="handleDropboxOk(record.value)" id="auth">Authorisieren</button>
+                        <button nz-button nzType="primary" [nzLoading]="dropboxIsLoading" (click)="handleDropboxOk(dropboxAuth.value)" id="auth" [disabled]="!dropboxAuth.valid">Authorisieren</button>
                     </div>
                 </nz-form-control>
             </nz-form-item>
@@ -133,7 +135,7 @@
             <p>Geben Sie die Adresse Ihres Mastodon Servers an:</p>
             <form #mastodonUrl="ngForm" nz-form [nzLayout]="'vertical'">
                 <nz-form-item>
-                    <input type="text" name="mastodonBaseUrl" required placeholder="https://mastodon.social" ngModel="{{ mastodonBaseUrl }}">
+                    <input type="text" name="mastodonBaseUrl" required placeholder="https://mastodon.social" ngModel="{{ mastodonBaseUrl }}" style="border-radius: 5px;">
                 </nz-form-item>
                 <nz-form-item>
                     <nz-form-control>
@@ -149,23 +151,27 @@
             <p>Eingabe des Authorization Codes:</p>
             <form #mastodonCode="ngForm" nz-form [nzLayout]="'vertical'">
                 <nz-form-item>
-                    <input type="text" name="mastodonAuthCode" required placeholder="Authorization Code" ngModel="{{ mastodonAuthCode }}">
+                    <input type="text" name="mastodonAuthCode" required placeholder="Authorization Code" ngModel="{{ mastodonAuthCode }}" style="border-radius: 5px;">
                 </nz-form-item>
                 <nz-form-item>
                     <nz-form-control>
                         <div style="display: flex; justify-content: space-between;">
                             <button nz-button nzType="primary" (click)="setMastodonProgress(0)" id="mastodonbutton">Zurück</button>
-                            <button nz-button nzType="primary" (click)="handleMastodonOk(mastodonCode.value)" id="mastodonbutton" [disabled]="!mastodonCode.valid">Authorisieren</button>
+                            <button nz-button nzType="primary" [nzLoading]="mastodonIsLoading" (click)="handleMastodonOk(mastodonCode.value)" id="mastodonbutton" [disabled]="!mastodonCode.valid">Authorisieren</button>
                         </div>
                     </nz-form-control>
                 </nz-form-item>
             </form>
         </div>
         <div *ngIf="mastodonProgress === 2">
-            <p>Ihr Mastodon Account wurde erfolgreich verknüpft.</p>
-            <div style="display: flex; justify-content: end;">
-                <button nz-button nzType="primary" (click)="handleMastodonFinish()" id="mastodonbutton">Fertig</button>
-            </div>
+            <nz-result
+            nzStatus="success"
+            nzTitle="Ihr Mastodon Account wurde erfolgreich verknüpft!"
+            style="padding: 0;">
+                <div nz-result-extra style="display: flex; justify-content: end;">
+                    <button nz-button nzType="primary" (click)="handleMastodonFinish()" id="mastodonbutton">Fertig</button>
+                </div>
+          </nz-result>
         </div>
     </ng-container>
     <div *nzModalFooter>

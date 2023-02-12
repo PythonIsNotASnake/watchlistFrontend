@@ -1,8 +1,19 @@
 button {
   margin-right: 8px;
+  border-radius: 5px;
 }
 
 #create {
   background-color: #084C61;
   border-color: #084C61;
+  color: white;
+}
+#create:disabled {
+  background-color: #415c64;
+  border-color: #415c64;
+  color: lightgray;
+}
+
+::ng-deep .ant-input-group-addon {
+  border-radius: 5px 0px 0px 5px;
 }

@@ -4,7 +4,7 @@ flex-wrap: nowrap;
 justify-content: space-evenly;">
     <div>
         <form #searchInput="ngForm" nz-form style="margin: auto; width: 500px;">
-            <nz-input-group [nzSuffix]="suffixIconSearch">
+            <nz-input-group [nzSuffix]="suffixIconSearch" style="border-radius: 5px;">
                 <input name="filterTitle" (keyup)="search(searchInput.value)" ngModel="{{ filterTitle }}" type="text" nz-input placeholder="Suchen..." />
             </nz-input-group>
             <ng-template #suffixIconSearch>

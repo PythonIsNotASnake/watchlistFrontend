@@ -1,7 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 .notification {
-    background-color: #55BCC9;
-    /*color: white;*/
+    background-color: #084C61;
+    color: white;
 }
 .ant-notification-notice-message {
     color: white;

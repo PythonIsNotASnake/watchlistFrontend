@@ -12,7 +12,9 @@
         <nz-descriptions-item nzTitle="Kurzbeschreibung">{{ this.description }}</nz-descriptions-item>
         <br/>
         <nz-descriptions-item nzTitle="Trailer">
-            <iframe width="480" height="320" [src]="safeSrc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <div style="border-radius: 10px; width: 480px; height: 320px; overflow: hidden;">
+                <iframe width="480" height="320" [src]="safeSrc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
         </nz-descriptions-item>
     </nz-descriptions>
 

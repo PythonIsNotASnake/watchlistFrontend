@@ -21,10 +21,12 @@ export class DashboardComponent implements OnInit {
   public dropboxIsVisible = false;
   public dropboxIsLoggedIn = false;
   dropboxAuthCode?: string;
+  dropboxIsLoading = false;
 
   public mastodonIsVisible = false;
   public mastodonIsLoggedIn = false;
   public mastodonProgress: number = 0;
+  mastodonIsLoading = false;
   mastodonAuthCode?: string;
   mastodonBaseUrl?: string;
   mastodonFullUrl?: string;
@@ -78,7 +80,15 @@ export class DashboardComponent implements OnInit {
 
       let usageCount = 0;
       const genreList: any[] = response.data.genrePopularityList;
-      for (let i = 0; i < genreList.length; i++) {
+
+      let genreLength = 0;
+      if (genreList.length < 5) {
+        genreLength = genreList.length;
+      } else {
+        genreLength = 5;
+      }
+
+      for (let i = 0; i < genreLength; i++) {
         const genreRating = {
           value: genreList[i].usageInRecords,
           name: genreList[i].genre
@@ -89,7 +99,7 @@ export class DashboardComponent implements OnInit {
 
       const other = {
         value: this.recordCount - usageCount,
-        name: 'Andere'
+        name: 'Sonstige'
       };
       this.data.push(other);
     })
@@ -113,6 +123,7 @@ export class DashboardComponent implements OnInit {
 
   async handleDropboxOk(auth: any) {
     this.dropboxAuthCode = auth.dropboxAuthCode;
+    this.dropboxIsLoading = true;
     const data = {"authorizationCode": auth.dropboxAuthCode};
     
     try {
@@ -129,6 +140,8 @@ export class DashboardComponent implements OnInit {
         );
         this.dropboxLoginService.saveLoginTimestamp();
         this.dropboxIsLoggedIn = true;
+        this.dropboxIsLoading = false;
+        this.dropboxIsVisible = false;
       } else {
         this.notification.create(
           'error',
@@ -140,8 +153,8 @@ export class DashboardComponent implements OnInit {
           }
         );
         this.dropboxIsLoggedIn = false;
+        this.dropboxIsLoading = false;
       }
-      this.dropboxIsVisible = false;
     } catch (error) {
       console.error(error);
       this.dropboxIsVisible = true;
@@ -155,6 +168,7 @@ export class DashboardComponent implements OnInit {
         }
       );
       this.dropboxIsLoggedIn = false;
+      this.dropboxIsLoading = false;
     }
   }
 
@@ -277,6 +291,7 @@ export class DashboardComponent implements OnInit {
 
   async handleMastodonOk(auth: any) {
     this.mastodonAuthCode = auth.mastodonAuthCode;
+    this.mastodonIsLoading = true;
     const data = {
       "authorizationCode": this.mastodonAuthCode, 
       "mastodonUrl": this.mastodonBaseUrl
@@ -295,6 +310,7 @@ export class DashboardComponent implements OnInit {
           }
         );
         this.mastodonIsLoggedIn = true;
+        this.mastodonIsLoading = false;
         this.setMastodonProgress(2);
       } else {
         this.notification.create(
@@ -307,6 +323,7 @@ export class DashboardComponent implements OnInit {
           }
         );
         this.mastodonIsLoggedIn = false;
+        this.mastodonIsLoading = false;
       }
     } catch (error) {
       console.error(error);
@@ -321,6 +338,7 @@ export class DashboardComponent implements OnInit {
         }
       );
       this.mastodonIsLoggedIn = false;
+      this.mastodonIsLoading = false;
     }
   }
 

@@ -1,12 +1,12 @@
 button {
   margin-right: 8px;
+  border-radius: 5px;
 }
 
 #mastodonShare {
   background-color: #595aff;
   border-color: #595aff;
   color: white;
-  border-radius: 5px;
 }
 #mastodonShare:disabled {
   background-color: #858afa;
