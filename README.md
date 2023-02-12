@@ -65,9 +65,9 @@ To run docker container "docker run -d -it --name watchlistFrontend -p 4200:80 w
 Congratulations! Your website can be reached on http://{ip-address}:4200/  
 Hint: If you want to start the container on startup of your machine automatically insert the additional flag "--restart always" to the "docker run"-command.  
 # Images  
-<img src="githubimages/start.JPG" alt="start page" width="24%"/>  <img src="githubimages/create.JPG" alt="create page" width="24%"/>  
-<img src="githubimages/dropboxauth.JPG" alt="dropbox authentication menu" width="24%"/>  
-<img src="githubimages/mastodonauth.JPG" alt="mastodon authentication menu" width="24%"/>  <img src="githubimages/mastodonlogin.JPG" alt="successful mastodon login" width="24%"/>  
-<img src="githubimages/detail.JPG" alt="detail page" width="24%"/>  <img src="githubimages/statusonmastodon.JPG" alt="generated status on mastodon" width="24%"/>  
+<img src="githubimages/start.JPG" alt="start page" width="48%"/>  <img src="githubimages/create.JPG" alt="create page" width="48%"/>  
+<img src="githubimages/dropboxauth.JPG" alt="dropbox authentication menu" width="48%"/>  
+<img src="githubimages/mastodonauth.JPG" alt="mastodon authentication menu" width="48%"/>  <img src="githubimages/mastodonlogin.JPG" alt="successful mastodon login" width="48%"/>  
+<img src="githubimages/detail.JPG" alt="detail page" width="48%"/>  <img src="githubimages/statusonmastodon.JPG" alt="generated status on mastodon" width="48%"/>  
   
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.3.5.
