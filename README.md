@@ -1,5 +1,12 @@
 # WatchlistFrontend
 
+1. [Deployment](#deployment)  
+1.1. [Configure app.config.json](#configure-appconfigjson)  
+1.2. [Apache Web Server](#apache-web-server)  
+1.3. [ARM Deployment (e.g. Raspberry PI) (Deprecated)](#arm-deployment-eg-raspberry-pi-deprecated)  
+2. [Images](#images)  
+
+
 # Deployment
 
 ## Configure app.config.json
@@ -55,7 +62,7 @@ Create .htaccess file with following content:
 </IfModule>
 ```
 
-## ARM Deployment (e.g. Raspberry PI)
+## ARM Deployment (e.g. Raspberry PI) (Deprecated)
 In project directory use following commands.  
 To install all needed dependencies "sudo npm install -g @angular/cli"  
 and "sudo npm install"  
@@ -64,6 +71,7 @@ To build docker image "docker build -t watchlistfrontend:latest ."
 To run docker container "docker run -d -it --name watchlistFrontend -p 4200:80 watchlistfrontend:latest"  
 Congratulations! Your website can be reached on http://{ip-address}:4200/  
 Hint: If you want to start the container on startup of your machine automatically insert the additional flag "--restart always" to the "docker run"-command.  
+
 # Images  
 <img src="githubimages/start.JPG" alt="start page" width="48%"/>  <img src="githubimages/create.JPG" alt="create page" width="48%"/>  
 <img src="githubimages/dropboxauth.JPG" alt="dropbox authentication menu" width="48%"/>  
