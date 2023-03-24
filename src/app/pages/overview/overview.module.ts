@@ -11,6 +11,7 @@ import { NzGridModule } from "ng-zorro-antd/grid";
 import { NzButtonModule } from "ng-zorro-antd/button";
 import { NzInputModule } from "ng-zorro-antd/input";
 import { NzSkeletonModule } from "ng-zorro-antd/skeleton";
+import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 
 import { OverviewRoutingModule } from "./overview-routing.module";
 
@@ -32,7 +33,8 @@ import { NzPaginationModule } from "ng-zorro-antd/pagination";
     NzGridModule,
     NzButtonModule,
     NzInputModule,
-    NzSkeletonModule
+    NzSkeletonModule,
+    NzPopconfirmModule
   ],
   declarations: [OverviewComponent],
   exports: [OverviewComponent]

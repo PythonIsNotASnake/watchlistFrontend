@@ -66,7 +66,6 @@ export class CreateviewComponent implements OnInit {
   async createRecord(record: RecordModel) {
     this.isLoading = true;
     record.link = this.youtubeStartUrl + record.link;
-    // const data = {"title": record.title, "description": record.description, "genre": record.genre, "link": this.youtubeStartUrl + record.link};
     
     try {
       const response = await axios.post(this.baseUrl + "/records", record);
@@ -91,7 +90,6 @@ export class CreateviewComponent implements OnInit {
   async updateRecord(record: RecordModel) {
     this.isLoading = true;
     record.link = this.youtubeStartUrl + record.link;
-    // const data = {"title": record.title, "description": record.description, "genre": record.genre, "link": this.youtubeStartUrl + record.url};
     
     try {
       const response = await axios.put(this.baseUrl + "/records/" + this.id, record);
@@ -115,7 +113,7 @@ export class CreateviewComponent implements OnInit {
   preview(result: any) {
     this.safeSrc = this.sanitizer.bypassSecurityTrustResourceUrl(
       "http://www.youtube.com/embed/" +
-      result.url +
+      result.link +
       "?enablejsapi=1"
       );
   }

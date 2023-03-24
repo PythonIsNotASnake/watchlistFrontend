@@ -16,3 +16,7 @@ button {
 #mastodonShare:hover {
   background-color: #858afa;
 }
+
+::ng-deep .ant-input-group-addon {
+  border-radius: 5px 0px 0px 5px;
+}

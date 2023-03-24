@@ -110,8 +110,8 @@
     <ng-container *nzModalContent>
         <nz-steps [nzCurrent]="mastodonProgress" nzSize="small">
             <nz-step nzTitle="Server" [nzIcon]="serverTemplate"></nz-step>
-            <nz-step nzTitle="Authentifizierung" [nzIcon]="authTemplate"></nz-step>
-            <nz-step nzTitle="Abgeschlossen" [nzIcon]="successTemplate"></nz-step>
+            <nz-step nzTitle="Authentication" [nzIcon]="authTemplate"></nz-step>
+            <nz-step nzTitle="Finish" [nzIcon]="successTemplate"></nz-step>
             <ng-template #serverTemplate>
                 <span *ngIf="mastodonProgress === 0" nz-icon nzType="edit" [nzTheme]="'twotone'" [nzTwotoneColor]="'#595aff'"></span>
                 <span *ngIf="mastodonProgress !== 0" nz-icon nzType="check-circle" [nzTheme]="'twotone'" [nzTwotoneColor]="'#595aff'"></span>
@@ -135,7 +135,11 @@
             <p>Put in the address of your mastodon server:</p>
             <form #mastodonUrl="ngForm" nz-form [nzLayout]="'vertical'">
                 <nz-form-item>
-                    <input type="text" name="mastodonBaseUrl" required placeholder="https://mastodon.social" ngModel="{{ mastodonBaseUrl }}" style="border-radius: 5px;">
+                    <div>
+                        <nz-input-group nzAddOnBefore="https://">
+                            <input type="text" nz-input name="mastodonBaseUrl" required placeholder="mastodon.social" ngModel="{{ mastodonBaseUrl }}" style="border-radius: 0px 5px 5px 0px;" />
+                        </nz-input-group>
+                    </div>
                 </nz-form-item>
                 <nz-form-item>
                     <nz-form-control>
@@ -147,8 +151,7 @@
             </form>
         </div>
         <div *ngIf="mastodonProgress === 1">
-            <p>Open the authentication page of mastodon if you want to share content on mastodon. On <a href="{{ mastodonFullUrl }}" target="_blank">authorize mastodon</a> </p>
-            <p>Rufen Sie die Authentifizierungs Seite von Mastodon auf, um Einträge auf Mastodon zu teilen. Unter <a href="{{ mastodonFullUrl }}" target="_blank">Mastodon authorisieren</a> you get an unique authorization code which you must put in the input field below.</p>
+            <p>Open the authentication page of mastodon if you want to share content on mastodon. On <a href="{{ mastodonFullUrl }}" target="_blank">authorize mastodon</a> you get an unique authorization code which you must put in the input field below.</p>
             <p>Input of the authorization code:</p>
             <form #mastodonCode="ngForm" nz-form [nzLayout]="'vertical'">
                 <nz-form-item>

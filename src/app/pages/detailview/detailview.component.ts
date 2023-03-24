@@ -139,6 +139,7 @@ export class DetailviewComponent implements OnInit {
             nzClass: "notification"
           }
         );
+        this.handleTootCancel();
       } else {
         this.notification.create(
           "error",

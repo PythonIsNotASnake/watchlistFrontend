@@ -28,12 +28,27 @@ justify-content: space-evenly;">
             </thead>
             <tbody>
                 <tr *ngFor="let data of basicTable.data">
-                    <td routerLink="/detail/{{ data.id }}">{{ data.title }}</td>
-                    <td routerLink="/detail/{{ data.id }}">{{ data.genre }}</td>
+                    <td routerLink="/detail/{{ data.id }}" style="cursor: pointer;">{{ data.title }}</td>
+                    <td routerLink="/detail/{{ data.id }}" style="cursor: pointer;">{{ data.genre }}</td>
                     <td>
                         <i routerLink="/administration/{{ data.id }}" nz-icon nzType="edit" [nzTheme]="'twotone'" [nzTwotoneColor]="'brown'"></i>
                         <nz-divider nzType="vertical"></nz-divider>
-                        <i (click)="deleteRecord(data.id)" nz-icon nzType="delete" [nzTheme]="'twotone'" [nzTwotoneColor]="'red'" style="cursor: pointer;"></i>
+                        <i nz-popconfirm
+                            nzPopconfirmTitle="Are you sure delete this task?"
+                            nzPopconfirmTitle="Delete {{ data.title }}?"
+                            nzOkText="Delete"
+                            [nzOkType]="'primary'"
+                            nzCancelText="Cancel"
+                            (nzOnConfirm)="deleteRecord(data.id)"
+                            nzPopconfirmPlacement="top"
+                            [nzIcon]="'delete'"
+                            [nzPopconfirmOverlayClassName]="'deletepopover'"
+                            nz-icon nzType="delete" 
+                            [nzTheme]="'twotone'" 
+                            [nzTwotoneColor]="'red'" 
+                            style="cursor: pointer;">
+                        </i>
+                        
                     </td>
                 </tr>
             </tbody>

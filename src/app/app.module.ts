@@ -28,6 +28,7 @@ import { NzFormModule } from "ng-zorro-antd/form";
 import { NzToolTipModule } from "ng-zorro-antd/tooltip";
 import { NzStepsModule } from "ng-zorro-antd/steps";
 import { NzResultModule } from "ng-zorro-antd/result";
+import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NgxEchartsModule } from "ngx-echarts";
 
 registerLocaleData(de);
@@ -64,6 +65,7 @@ export function appConfigInit(appConfigService: AppConfigService) {
     NzToolTipModule,
     NzStepsModule,
     NzResultModule,
+    NzSelectModule,
     NgxEchartsModule.forRoot({
       echarts: () => import("echarts")
     })

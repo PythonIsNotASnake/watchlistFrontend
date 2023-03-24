@@ -295,6 +295,9 @@ export class DashboardComponent implements OnInit {
 
   handleMastodonBaseUrl(urlForm: any) {
     this.mastodonBaseUrl = urlForm.mastodonBaseUrl;
+    if (!this.mastodonBaseUrl?.startsWith("https://")) {
+      this.mastodonBaseUrl = "https://" + this.mastodonBaseUrl;
+    }
     if (!this.mastodonBaseUrl?.endsWith("/")) {
       this.mastodonBaseUrl = this.mastodonBaseUrl + "/";
     }

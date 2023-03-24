@@ -6,3 +6,68 @@ button {
     margin-right: 8px;
     border-radius: 5px;
 }
+::ng-deep .ant-popover-inner {
+    border-radius: 10px;
+}
+::ng-deep .ant-btn {
+    border-radius: 5px
+}
+::ng-deep .ant-btn-primary {
+    background-color: #084C61;
+    border-color: #084C61;
+    color: white;
+}
+::ng-deep .ant-btn-primary:focus {
+    background-color: #084C61;
+    border-color: #084C61;
+    color: white;
+}
+::ng-deep .ant-btn-primary:active {
+    background-color: #084C61;
+    border-color: #084C61;
+    color: white;
+}
+::ng-deep .ant-btn-primary:hover {
+    background-color: #084C61;
+    border-color: #084C61;
+    color: white;
+}
+
+::ng-deep .ant-pagination-item-active {
+    border-color: #084C61;
+    color: #084C61;
+}
+::ng-deep .ant-pagination-item-active a {
+    color: #084C61;
+}
+::ng-deep .ant-pagination-item-active:hover {
+    background: #084C61;
+    border-color: #084C61;
+}
+::ng-deep .ant-pagination-item-active:hover a {
+    color: white;
+}
+
+::ng-deep .ant-pagination-item:hover {
+    background: #084C61;
+    border-color: #084C61;
+}
+::ng-deep .ant-pagination-item:hover a {
+    color: white;
+}
+
+::ng-deep .ant-pagination-next:hover .ant-pagination-item-link {
+    color: white;
+    background: #084C61;
+    border-color: #084C61;
+}
+::ng-deep .ant-pagination-prev:hover .ant-pagination-item-link {
+    color: white;
+    background: #084C61;
+    border-color: #084C61;
+}
+::ng-deep .ant-pagination-disabled:hover .ant-pagination-item-link {
+    color: rgba(0, 0, 0, 0.25);
+    border-color: #d9d9d9;
+    background-color: #fff;
+}

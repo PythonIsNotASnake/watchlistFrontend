@@ -108,5 +108,8 @@
       }
     }
   },
-  "defaultProject": "watchlistFrontend"
+  "defaultProject": "watchlistFrontend",
+  "cli": {
+    "analytics": false
+  }
 }
