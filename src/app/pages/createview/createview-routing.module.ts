@@ -1,9 +1,9 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { CreateviewComponent } from './createview.component';
+import { NgModule } from "@angular/core";
+import { Routes, RouterModule } from "@angular/router";
+import { CreateviewComponent } from "./createview.component";
 
 const routes: Routes = [
-  { path: '', component: CreateviewComponent },
+  { path: "", component: CreateviewComponent },
 ];
 
 @NgModule({

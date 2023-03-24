@@ -1,9 +1,9 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { DetailviewComponent } from './detailview.component';
+import { NgModule } from "@angular/core";
+import { Routes, RouterModule } from "@angular/router";
+import { DetailviewComponent } from "./detailview.component";
 
 const routes: Routes = [
-  { path: '', component: DetailviewComponent },
+  { path: "", component: DetailviewComponent },
 ];
 
 @NgModule({

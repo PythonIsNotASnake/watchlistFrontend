@@ -1,8 +1,8 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { DetailviewComponent } from './detailview.component';
+import { DetailviewComponent } from "./detailview.component";
 
-describe('DetailviewComponent', () => {
+describe("DetailviewComponent", () => {
   let component: DetailviewComponent;
   let fixture: ComponentFixture<DetailviewComponent>;
 
@@ -19,7 +19,7 @@ describe('DetailviewComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

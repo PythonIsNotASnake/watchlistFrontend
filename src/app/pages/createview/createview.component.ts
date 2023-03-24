@@ -1,14 +1,15 @@
-import { Component, OnInit } from '@angular/core';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { ActivatedRoute, Router } from '@angular/router';
-import { NzNotificationService } from 'ng-zorro-antd/notification';
-import axios, { Axios } from 'axios';
-import { AppConfigService } from '../../app.config.service';
+import { Component, OnInit } from "@angular/core";
+import { DomSanitizer, SafeResourceUrl } from "@angular/platform-browser";
+import { ActivatedRoute, Router } from "@angular/router";
+import { NzNotificationService } from "ng-zorro-antd/notification";
+import axios, { Axios } from "axios";
+import { AppConfigService } from "../../app.config.service";
+import { RecordModel } from "src/app/models/record";
 
 @Component({
-  selector: 'app-createview',
-  templateUrl: './createview.component.html',
-  styleUrls: ['./createview.component.css']
+  selector: "app-createview",
+  templateUrl: "./createview.component.html",
+  styleUrls: ["./createview.component.css"]
 })
 export class CreateviewComponent implements OnInit {
 
@@ -19,10 +20,10 @@ export class CreateviewComponent implements OnInit {
   title = "";
   description = "";
   genre = "";
-  url = "";
+  link = "";
   youtubeStartUrl = "https://www.youtube.com/embed/";
 
-  public baseUrl = '';
+  public baseUrl = "";
 
   ngOnInit(): void {
     this.baseUrl = this.config.baseApi;
@@ -31,84 +32,80 @@ export class CreateviewComponent implements OnInit {
       this.id = params.get("id")
     });
 
-    if (this.id != null && this.id !== '') {
+    if (this.id != null && this.id !== "") {
       this.isUpdate = true;
       this.getRecord(this.id);
     }
 
-    console.log(this.isUpdate);
-
     this.safeSrc = this.sanitizer.bypassSecurityTrustResourceUrl(
-      'http://www.youtube.com/embed/' +
-      '?enablejsapi=1'
+      "http://www.youtube.com/embed/" +
+      "?enablejsapi=1"
       );
-    const axios = require('axios').default;
+    const axios = require("axios").default;
   }
 
  async getRecord(id: String) {
     try {
-      const response = await axios.get(this.baseUrl + '/records/' + id);
-      console.log(response);
+      const response = await axios.get(this.baseUrl + "/records/" + id);
       this.title = response.data.title;
       this.description = response.data.description;
       this.genre = response.data.genre;
       var fullUrl: string;
       fullUrl = response.data.link;
-      this.url = fullUrl.substring(29);
+      this.link = fullUrl.substring(29);
       this.safeSrc = this.sanitizer.bypassSecurityTrustResourceUrl(
-        'http://www.youtube.com/embed/' +
-        this.url +
-        '?enablejsapi=1'
+        "http://www.youtube.com/embed/" +
+        this.link +
+        "?enablejsapi=1"
         );
     } catch (error) {
       console.error(error);
     }
  }
 
-  async createRecord(record: any) {
+  async createRecord(record: RecordModel) {
     this.isLoading = true;
-    const data = {"title": record.title, "description": record.description, "genre": record.genre, "link": this.youtubeStartUrl + record.url};
+    record.link = this.youtubeStartUrl + record.link;
+    // const data = {"title": record.title, "description": record.description, "genre": record.genre, "link": this.youtubeStartUrl + record.link};
     
     try {
-      const response = await axios.post(this.baseUrl + '/records', data);
-      console.log(response);
+      const response = await axios.post(this.baseUrl + "/records", record);
       this.id = response.data.data.id;
       this.isLoading = false;
       this.notification.create(
-        'success',
-        'Erstellt',
-        'Neuer Eintrag wurde erfolgreich erstellt.',
+        "success",
+        "Created",
+        "New record has been created.",
         {
           nzAnimate: true,
-          nzClass: 'notification'
+          nzClass: "notification"
         }
       );
-      this.router.navigate([`/detailview/${this.id}`], { relativeTo: this.route });
+      this.router.navigate([`/detail/${this.id}`], { relativeTo: this.route });
     } catch (error) {
       console.error(error);
       this.isLoading = false;
     }
   }
 
-  async updateRecord(record: any) {
+  async updateRecord(record: RecordModel) {
     this.isLoading = true;
-    const data = {"title": record.title, "description": record.description, "genre": record.genre, "link": this.youtubeStartUrl + record.url};
+    record.link = this.youtubeStartUrl + record.link;
+    // const data = {"title": record.title, "description": record.description, "genre": record.genre, "link": this.youtubeStartUrl + record.url};
     
     try {
-      const response = await axios.put(this.baseUrl + '/records/' + this.id, data);
-      console.log(response);
+      const response = await axios.put(this.baseUrl + "/records/" + this.id, record);
       this.isLoading = false;
       this.notification.create(
-        'success',
-        'Aktualisiert',
-        'Eintrag wurde erfolgreich aktualisiert.',
+        "success",
+        "Updated",
+        "Record has been updated.",
         {
           nzAnimate: true,
-          nzClass: 'notification'
+          nzClass: "notification"
         }
       );
-      console.log("PUT navigate: " + this.id);
-      this.router.navigate([`/detailview/${this.id}`], { relativeTo: this.route });
+      this.router.navigate([`/detail/${this.id}`], { relativeTo: this.route });
     } catch (error) {
       console.error(error);
       this.isLoading = false;
@@ -117,9 +114,9 @@ export class CreateviewComponent implements OnInit {
 
   preview(result: any) {
     this.safeSrc = this.sanitizer.bypassSecurityTrustResourceUrl(
-      'http://www.youtube.com/embed/' + 
-      result.url + 
-      '?enablejsapi=1'
+      "http://www.youtube.com/embed/" +
+      result.url +
+      "?enablejsapi=1"
       );
   }
 

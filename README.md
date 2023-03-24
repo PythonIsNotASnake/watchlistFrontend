@@ -1,4 +1,7 @@
 # WatchlistFrontend
+Web application to memorized about watched series and movies
+
+## Disclaimer: Watchlist is only for use inside a private network. The software does not support any kind of user management. So if you add data or logged in with third party accounts everyone has access to your created data.
 
 1. [Deployment](#deployment)  
 1.1. [Configure app.config.json](#configure-appconfigjson)  

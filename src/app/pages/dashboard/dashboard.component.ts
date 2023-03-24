@@ -1,14 +1,19 @@
-import { Component, OnInit } from '@angular/core';
-import axios, { Axios } from 'axios';
-import { NzNotificationService } from 'ng-zorro-antd/notification';
-import { BaseApiService } from 'src/app/services/base.api.service';
-import { DropboxLoginService } from 'src/app/services/dropbox.login.service';
-import { AppConfigService } from '../../app.config.service';
+import { Component, OnInit } from "@angular/core";
+import axios, { Axios } from "axios";
+import { NzNotificationService } from "ng-zorro-antd/notification";
+import { AccessTokenModel } from "src/app/models/access-token";
+import { DropboxAccessTokenResponseModel } from "src/app/models/dropbox-access-token-response";
+import { DropboxAuthorizationCodeModel } from "src/app/models/dropbox-authorization-code";
+import { MastodonAuthorizationCredentialsModel } from "src/app/models/mastodon-authorization-credentials";
+import { StatisticModel } from "src/app/models/statistic";
+import { BaseApiService } from "src/app/services/base.api.service";
+import { DropboxLoginService } from "src/app/services/dropbox.login.service";
+import { AppConfigService } from "../../app.config.service";
 
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.css']
+  selector: "app-dashboard",
+  templateUrl: "./dashboard.component.html",
+  styleUrls: ["./dashboard.component.css"]
 })
 
 export class DashboardComponent implements OnInit {
@@ -31,9 +36,9 @@ export class DashboardComponent implements OnInit {
   mastodonBaseUrl?: string;
   mastodonFullUrl?: string;
 
-  public baseUrl = '';
-  public dropboxUrl = '';
-  public mastodonUrl = '';
+  public baseUrl = "";
+  public dropboxUrl = "";
+  public mastodonUrl = "";
 
   ngOnInit(): void {
     this.baseUrl = this.config.baseApi;
@@ -46,17 +51,17 @@ export class DashboardComponent implements OnInit {
 
     this.options = {
       tooltip: {
-        trigger: 'item'
+        trigger: "item"
       },
       series: [
         {
-          name: 'Genre',
-          type: 'pie',
-          radius: '100%',
+          name: "Genre",
+          type: "pie",
+          radius: "100%",
           avoidLabelOverlap: false,
           label: {
             show: false,
-            position: 'center'
+            position: "center"
           },
           labelLine: {
             show: false
@@ -68,18 +73,19 @@ export class DashboardComponent implements OnInit {
   }
 
   getStatistic() {
-    const axios = require('axios').default;
+    const axios = require("axios").default;
     const instance = axios.create({
       baseURL: this.baseUrl,
       timeout: 1000,
     });
-    instance.get('/statistic')
+    instance.get("/statistic")
     .then((response: any) => {
-      this.genreCount = response.data.genreCount;
-      this.recordCount = response.data.recordCount;
+      const statisticResponse: StatisticModel = response.data;
+      this.genreCount = statisticResponse.genreCount;
+      this.recordCount = statisticResponse.recordCount;
 
       let usageCount = 0;
-      const genreList: any[] = response.data.genrePopularityList;
+      const genreList: any[] = statisticResponse.genrePopularityList;
 
       let genreLength = 0;
       if (genreList.length < 5) {
@@ -97,15 +103,16 @@ export class DashboardComponent implements OnInit {
         usageCount = usageCount + genreList[i].usageInRecords;
       }
 
-      const other = {
-        value: this.recordCount - usageCount,
-        name: 'Sonstige'
-      };
-      this.data.push(other);
+      if (genreList.length > 5) {
+        const other = {
+          value: this.recordCount - usageCount,
+          name: "Others"
+        };
+        this.data.push(other);
+      }
     })
     .catch(function (error: any) {
       // handle error
-      console.log(error);
     })
     .then(function () {
       // always executed
@@ -117,39 +124,41 @@ export class DashboardComponent implements OnInit {
   }
 
   logoutDropbox() {
-    this.dropboxLoginService.clearLoginTimestamp();
+    this.dropboxLoginService.clearLogin();
     this.dropboxIsLoggedIn = false;
   }
 
   async handleDropboxOk(auth: any) {
     this.dropboxAuthCode = auth.dropboxAuthCode;
     this.dropboxIsLoading = true;
-    const data = {"authorizationCode": auth.dropboxAuthCode};
-    
+    const data: DropboxAuthorizationCodeModel = {"authorizationCode": auth.dropboxAuthCode};
+
     try {
-      const response = await axios.post(this.baseUrl + '/dropbox/authorize', data);
-      if (response.data) {
+      const response = await axios.post(this.baseUrl + "/dropbox/authorize", data);
+      if (response.data.access_token) {
+        const accessTokenResponse: DropboxAccessTokenResponseModel = response.data;
         this.notification.create(
-          'success',
-          'Authorisiert',
-          'Sie haben WatchList erfolgreich mit Dropbox verknüpft.',
+          "success",
+          "Authorized",
+          "You have successfully linked your dropbox with WatchList.",
           {
             nzAnimate: true,
-            nzClass: 'notification'
+            nzClass: "notification"
           }
         );
         this.dropboxLoginService.saveLoginTimestamp();
+        this.dropboxLoginService.saveAccessToken(accessTokenResponse.access_token);
         this.dropboxIsLoggedIn = true;
         this.dropboxIsLoading = false;
         this.dropboxIsVisible = false;
       } else {
         this.notification.create(
-          'error',
-          'Nicht authorisiert',
-          'Etwas ist schief gelaufen. Leider konnte WatchList nicht mit Ihrer Dropbox verknüpft werden.',
+          "error",
+          "Not authorized",
+          "Something went wrong. Unfortunately WatchList could not be linked to your dropbox.",
           {
             nzAnimate: true,
-            nzClass: 'notification'
+            nzClass: "notification"
           }
         );
         this.dropboxIsLoggedIn = false;
@@ -159,12 +168,12 @@ export class DashboardComponent implements OnInit {
       console.error(error);
       this.dropboxIsVisible = true;
       this.notification.create(
-        'error',
-        'Nicht authorisiert',
-        'Etwas ist schief gelaufen. Leider konnte WatchList nicht mit Ihrer Dropbox verknüpft werden.',
+        "error",
+        "Not authorized",
+        "Something went wrong. Unfortunately, WatchList could not be linked to your dropbox.",
         {
           nzAnimate: true,
-          nzClass: 'notification'
+          nzClass: "notification"
         }
       );
       this.dropboxIsLoggedIn = false;
@@ -182,38 +191,40 @@ export class DashboardComponent implements OnInit {
 
   async storeInDropbox() {
     try {
-      const response = await axios.post(this.baseUrl + '/backups/store');
+      const accessToken = this.dropboxLoginService.getAccessToken();
+      const data: AccessTokenModel = {"accessToken": accessToken};
+      const response = await axios.post(this.baseUrl + "/backups/store", data);
       const status = response.status;
       if (status === 200 || status === 201) {
         this.notification.create(
-          'success',
-          'Gesichert',
-          'Backup wurde erfolgreich erstellt.',
+          "success",
+          "Stored",
+          "Backup was created successfully.",
           {
             nzAnimate: true,
-            nzClass: 'notification'
+            nzClass: "notification"
           }
         );
       } else {
         this.notification.create(
-          'error',
-          'Backup fehlgeschlagen',
-          'Etwas ist schief gelaufen. Leider konnte kein Backup erzeugt werden.',
+          "error",
+          "Backup failed",
+          "Something went wrong. Unfortunately, no backup could be created.",
           {
             nzAnimate: true,
-            nzClass: 'notification'
+            nzClass: "notification"
           }
         );
       }
     } catch (error) {
       console.error(error);
       this.notification.create(
-        'error',
-        'Backup fehlgeschlagen',
-        'Etwas ist schief gelaufen. Leider konnte kein Backup erzeugt werden.',
+        "error",
+        "Backup failed",
+        "Something went wrong. Unfortunately, no backup could be created.",
         {
           nzAnimate: true,
-          nzClass: 'notification'
+          nzClass: "notification"
         }
       );
     }
@@ -221,38 +232,40 @@ export class DashboardComponent implements OnInit {
 
   async restoreFromDropbox() {
     try {
-      const response = await axios.post(this.baseUrl + '/backups/restore');
+      const accessToken = this.dropboxLoginService.getAccessToken();
+      const data: AccessTokenModel = {"accessToken": accessToken};
+      const response = await axios.post(this.baseUrl + "/backups/restore", data);
       const status = response.status;
       if (status === 200 || status === 201) {
         this.notification.create(
-          'success',
-          'Wiederhergestellt',
-          'Backup wurde erfolgreich eingespielt. Bitte laden Sie die Seite neu.',
+          "success",
+          "Restored",
+          "Backup was successfully applied. Please reload the page.",
           {
             nzAnimate: true,
-            nzClass: 'notification'
+            nzClass: "notification"
           }
         );
       } else {
         this.notification.create(
-          'error',
-          'Wiederherstellen fehlgeschlagen',
-          'Etwas ist schief gelaufen. Leider konnte keine Daten wiederhergestellt werden.',
+          "error",
+          "Restore failed",
+          "Something went wrong. Unfortunately, no data could be recovered.",
           {
             nzAnimate: true,
-            nzClass: 'notification'
+            nzClass: "notification"
           }
         );
       }
     } catch (error) {
       console.error(error);
       this.notification.create(
-        'error',
-          'Wiederherstellen fehlgeschlagen',
-          'Etwas ist schief gelaufen. Leider konnte keine Daten wiederhergestellt werden.',
+        "error",
+        "Restore failed",
+        "Something went wrong. Unfortunately, no data could be recovered.",
         {
           nzAnimate: true,
-          nzClass: 'notification'
+          nzClass: "notification"
         }
       );
     }
@@ -260,7 +273,7 @@ export class DashboardComponent implements OnInit {
 
   async isMastodonAuthorized() {
     try {
-      const response = await axios.get(this.baseUrl + '/mastodon/authorized');
+      const response = await axios.get(this.baseUrl + "/mastodon/authorized");
       this.mastodonIsLoggedIn = response.data;
     } catch (error) {
       console.error(error);
@@ -269,7 +282,7 @@ export class DashboardComponent implements OnInit {
 
   async logoutMastodon() {
     try {
-      const response = await axios.post(this.baseUrl + '/mastodon/logout');
+      const response = await axios.post(this.baseUrl + "/mastodon/logout");
       this.mastodonIsLoggedIn = !response.data;
     } catch (error) {
       console.error(error);
@@ -292,21 +305,21 @@ export class DashboardComponent implements OnInit {
   async handleMastodonOk(auth: any) {
     this.mastodonAuthCode = auth.mastodonAuthCode;
     this.mastodonIsLoading = true;
-    const data = {
-      "authorizationCode": this.mastodonAuthCode, 
-      "mastodonUrl": this.mastodonBaseUrl
+    const data: MastodonAuthorizationCredentialsModel = {
+      "authorizationCode": this.mastodonAuthCode ? this.mastodonAuthCode : "", 
+      "mastodonUrl": this.mastodonBaseUrl ? this.mastodonBaseUrl : ""
     };
     
     try {
-      const response = await axios.post(this.baseUrl + '/mastodon/authorize', data);
+      const response = await axios.post(this.baseUrl + "/mastodon/authorize", data);
       if (response.data) {
         this.notification.create(
-          'success',
-          'Authorisiert',
-          'Sie haben WatchList erfolgreich mit Mastodon verknüpft.',
+          "success",
+          "Authorized",
+          "You have successfully linked mastodon with WatchList.",
           {
             nzAnimate: true,
-            nzClass: 'notification'
+            nzClass: "notification"
           }
         );
         this.mastodonIsLoggedIn = true;
@@ -314,12 +327,12 @@ export class DashboardComponent implements OnInit {
         this.setMastodonProgress(2);
       } else {
         this.notification.create(
-          'error',
-          'Nicht authorisiert',
-          'Etwas ist schief gelaufen. Leider konnte WatchList nicht mit Ihrem Mastodon Account verknüpft werden.',
+          "error",
+          "Not authorized",
+          "Something went wrong. Unfortunately, WatchList could not be linked to your mastodon account.",
           {
             nzAnimate: true,
-            nzClass: 'notification'
+            nzClass: "notification"
           }
         );
         this.mastodonIsLoggedIn = false;
@@ -329,12 +342,12 @@ export class DashboardComponent implements OnInit {
       console.error(error);
       this.mastodonIsVisible = true;
       this.notification.create(
-        'error',
-        'Nicht authorisiert',
-        'Etwas ist schief gelaufen. Leider konnte WatchList nicht mit Ihrem Mastodon Account verknüpft werden.',
+        "error",
+        "Not authorized",
+        "Something went wrong. Unfortunately, WatchList could not be linked to your mastodon account.",
         {
           nzAnimate: true,
-          nzClass: 'notification'
+          nzClass: "notification"
         }
       );
       this.mastodonIsLoggedIn = false;

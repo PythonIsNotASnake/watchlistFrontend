@@ -5,13 +5,14 @@ justify-content: space-evenly;">
     <div>
         <form #searchInput="ngForm" nz-form style="margin: auto; width: 500px;">
             <nz-input-group [nzSuffix]="suffixIconSearch" style="border-radius: 5px;">
-                <input name="filterTitle" (keyup)="search(searchInput.value)" ngModel="{{ filterTitle }}" type="text" nz-input placeholder="Suchen..." />
+                <input name="filterTitle" (keyup)="search(searchInput.value)" ngModel="{{ filterTitle }}" type="text" nz-input placeholder="Search..." />
             </nz-input-group>
             <ng-template #suffixIconSearch>
                 <span (click)="search(searchInput.value)" nz-icon nzType="search"></span>
             </ng-template>
         </form>
     </div>
+
     <div>
         <nz-table  #basicTable nzShowPagination [nzData]="records" [nzTotal]="total"
         [nzFrontPagination]="false"
@@ -20,17 +21,17 @@ justify-content: space-evenly;">
         (nzQueryParams)="onQueryParamsChange($event)">
             <thead>
                 <tr>
-                    <th>Titel</th>
+                    <th>Title</th>
                     <th>Genre</th>
-                    <th>Aktionen</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
                 <tr *ngFor="let data of basicTable.data">
-                    <td routerLink="/detailview/{{ data.id }}">{{ data.title }}</td>
-                    <td routerLink="/detailview/{{ data.id }}">{{ data.genre }}</td>
+                    <td routerLink="/detail/{{ data.id }}">{{ data.title }}</td>
+                    <td routerLink="/detail/{{ data.id }}">{{ data.genre }}</td>
                     <td>
-                        <i routerLink="/createview/{{ data.id }}" nz-icon nzType="edit" [nzTheme]="'twotone'" [nzTwotoneColor]="'brown'"></i>
+                        <i routerLink="/administration/{{ data.id }}" nz-icon nzType="edit" [nzTheme]="'twotone'" [nzTwotoneColor]="'brown'"></i>
                         <nz-divider nzType="vertical"></nz-divider>
                         <i (click)="deleteRecord(data.id)" nz-icon nzType="delete" [nzTheme]="'twotone'" [nzTwotoneColor]="'red'" style="cursor: pointer;"></i>
                     </td>

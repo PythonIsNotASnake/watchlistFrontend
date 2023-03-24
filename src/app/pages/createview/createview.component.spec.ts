@@ -1,8 +1,8 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { CreateviewComponent } from './createview.component';
+import { CreateviewComponent } from "./createview.component";
 
-describe('CreateviewComponent', () => {
+describe("CreateviewComponent", () => {
   let component: CreateviewComponent;
   let fixture: ComponentFixture<CreateviewComponent>;
 
@@ -19,7 +19,7 @@ describe('CreateviewComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

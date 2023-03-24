@@ -1,20 +1,21 @@
-import { CommonModule } from '@angular/common';
-import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { CommonModule } from "@angular/common";
+import { NgModule } from "@angular/core";
+import { FormsModule } from "@angular/forms";
 
-import { NzTableModule } from 'ng-zorro-antd/table';
-import { NzDividerModule } from 'ng-zorro-antd/divider';
-import { NzNotificationModule } from 'ng-zorro-antd/notification';
-import { NzCardModule } from 'ng-zorro-antd/card';
-import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzGridModule } from 'ng-zorro-antd/grid';
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzInputModule } from 'ng-zorro-antd/input';
+import { NzTableModule } from "ng-zorro-antd/table";
+import { NzDividerModule } from "ng-zorro-antd/divider";
+import { NzNotificationModule } from "ng-zorro-antd/notification";
+import { NzCardModule } from "ng-zorro-antd/card";
+import { NzIconModule } from "ng-zorro-antd/icon";
+import { NzGridModule } from "ng-zorro-antd/grid";
+import { NzButtonModule } from "ng-zorro-antd/button";
+import { NzInputModule } from "ng-zorro-antd/input";
+import { NzSkeletonModule } from "ng-zorro-antd/skeleton";
 
-import { OverviewRoutingModule } from './overview-routing.module';
+import { OverviewRoutingModule } from "./overview-routing.module";
 
-import { OverviewComponent } from './overview.component';
-import { NzPaginationModule } from 'ng-zorro-antd/pagination';
+import { OverviewComponent } from "./overview.component";
+import { NzPaginationModule } from "ng-zorro-antd/pagination";
 
 
 @NgModule({
@@ -30,7 +31,8 @@ import { NzPaginationModule } from 'ng-zorro-antd/pagination';
     NzIconModule,
     NzGridModule,
     NzButtonModule,
-    NzInputModule
+    NzInputModule,
+    NzSkeletonModule
   ],
   declarations: [OverviewComponent],
   exports: [OverviewComponent]
