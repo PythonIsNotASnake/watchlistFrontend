@@ -30,8 +30,9 @@ In project directory use following commands.
 To install all needed dependencies "sudo npm install -g @angular/cli"  
 and "sudo npm install"  
 To build project "npm run build" or "npm run build --prod"  
-Extract builded files to /var/www/html
-###Configure your Apache Web Server
+Extract builded files to /var/www/html 
+
+## Configure your Apache Web Server
 #### /etc/apache2/apache2.conf
 Add following code:
 ```
@@ -81,4 +82,4 @@ Hint: If you want to start the container on startup of your machine automaticall
 <img src="githubimages/mastodonauth.JPG" alt="mastodon authentication menu" width="48%"/>  <img src="githubimages/mastodonlogin.JPG" alt="successful mastodon login" width="48%"/>  
 <img src="githubimages/detail.JPG" alt="detail page" width="48%"/>  <img src="githubimages/statusonmastodon.JPG" alt="generated status on mastodon" width="48%"/>  
   
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.3.5.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli).
