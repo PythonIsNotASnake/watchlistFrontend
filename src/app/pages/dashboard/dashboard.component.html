@@ -1,72 +1,92 @@
 <div class="container">
 
-    <nz-card class="defaultcard" id="creation" [nzCover]="createTemplate" routerLink="/administration" style="cursor: pointer;">
-        <nz-card-meta
-            nzTitle="Creation"
-            nzDescription="Create a new record."
-        ></nz-card-meta>
-    </nz-card>
+    <div class="layer">
+        <nz-card class="defaultcard" id="creation" [nzCover]="createTemplate" routerLink="/administration" style="cursor: pointer;">
+            <div class="image-glas splinter-1"></div>
+            <div class="image-glas splinter-2"></div>
+            <div class="image-glas splinter-3"></div>
+            <nz-card-meta
+                nzTitle="Creation"
+                nzDescription="Create a new record."
+            ></nz-card-meta>
+        </nz-card>
+    </div>
 
-    <nz-card class="defaultcard" id="statistic" [nzCover]="statisticTemplate">
-        <nz-card-meta
-            nzTitle="Statistic"
-        ></nz-card-meta>
-        <nz-row [nzGutter]="16">
-            <nz-col [nzSpan]="8">
-                <nz-statistic [nzValue]="(recordCount | number)!" [nzTitle]="'Record count'"></nz-statistic>
-            </nz-col>
-            <nz-col [nzSpan]="8">
-                <nz-statistic [nzValue]="(genreCount | number)!" [nzTitle]="'Genre count'"></nz-statistic>
-            </nz-col>
-            <nz-col [nzSpan]="8">
-                <div style="height: 100%; width: 100%;" echarts [options]="options"></div>
-            </nz-col>
-        </nz-row>
-        
-    </nz-card>
-    <nz-card class="defaultcard" id="dropbox" [nzCover]="dropboxTemplate">
-        <nz-card-meta
-            nzTitle="Dropbox"
-        ></nz-card-meta>
-        <nz-row [nzGutter]="16" *ngIf="dropboxIsLoggedIn">
-            <nz-col [nzSpan]="8" style="text-align: center;">
-                <br/>
-                <i nz-icon nzType="logout" [nzTheme]="'outline'" style="font-size: 50px; cursor: pointer;" (click)="logoutDropbox()" nzTooltipTitle="Logout" nz-tooltip></i>
-            </nz-col>
-            <nz-col [nzSpan]="8" style="text-align: center;">
-                <br/>
-                <i nz-icon nzType="cloud-upload" [nzTheme]="'outline'" style="font-size: 50px; cursor: pointer;" (click)="storeInDropbox()" nzTooltipTitle="Store data in cloud" nz-tooltip></i>
-            </nz-col>
-            <nz-col [nzSpan]="8" style="text-align: center;">
-                <br/>
-                <i nz-icon nzType="cloud-download" [nzTheme]="'outline'" style="font-size: 50px; cursor: pointer;" (click)="restoreFromDropbox()" nzTooltipTitle="Restore data from cloud" nz-tooltip></i>
-            </nz-col>
-        </nz-row>
-        <nz-row [nzGutter]="16" *ngIf="!dropboxIsLoggedIn">
-            <nz-col [nzSpan]="8" style="text-align: center;">
-                <br/>
-                <i nz-icon nzType="login" [nzTheme]="'outline'" style="font-size: 50px; cursor: pointer;" (click)="setDropboxVisible()" nzTooltipTitle="Login" nz-tooltip></i>
-            </nz-col>
-        </nz-row>
-    </nz-card>
+    <div class="layer">
+        <nz-card class="defaultcard" id="statistic" [nzCover]="statisticTemplate">
+            <div class="image-glas splinter-1"></div>
+            <div class="image-glas splinter-2"></div>
+            <div class="image-glas splinter-3"></div>
+            <nz-card-meta
+                nzTitle="Statistic"
+            ></nz-card-meta>
+            <nz-row [nzGutter]="16">
+                <nz-col [nzSpan]="8">
+                    <nz-statistic [nzValue]="(recordCount | number)!" [nzTitle]="'Record count'"></nz-statistic>
+                </nz-col>
+                <nz-col [nzSpan]="8">
+                    <nz-statistic [nzValue]="(genreCount | number)!" [nzTitle]="'Genre count'"></nz-statistic>
+                </nz-col>
+                <nz-col [nzSpan]="8">
+                    <div style="height: 100%; width: 100%;" echarts [options]="options"></div>
+                </nz-col>
+            </nz-row>
+        </nz-card>
+    </div>
 
-    <nz-card class="defaultcard" id="mastodon" [nzCover]="mastodonTemplate">
-        <nz-card-meta
-            nzTitle="Mastodon"
-        ></nz-card-meta>
-        <nz-row [nzGutter]="16"  *ngIf="!mastodonIsLoggedIn">
-            <nz-col [nzSpan]="8" style="text-align: center;">
-                <br/>
-                <i nz-icon nzType="login" [nzTheme]="'outline'" style="font-size: 50px; cursor: pointer;" (click)="setMastodonVisible()" nzTooltipTitle="Login" nz-tooltip></i>
-            </nz-col>
-        </nz-row>
-        <nz-row [nzGutter]="16"  *ngIf="mastodonIsLoggedIn">
-            <nz-col [nzSpan]="8" style="text-align: center;">
-                <br/>
-                <i nz-icon nzType="logout" [nzTheme]="'outline'" style="font-size: 50px; cursor: pointer;" (click)="logoutMastodon()" nzTooltipTitle="Logout" nz-tooltip></i>
-            </nz-col>
-        </nz-row>
-    </nz-card>
+    <div class="layer">
+        <nz-card class="defaultcard" id="dropbox" [nzCover]="dropboxTemplate">
+            <div class="image-glas splinter-1"></div>
+            <div class="image-glas splinter-2"></div>
+            <div class="image-glas splinter-3"></div>
+            <nz-card-meta
+                nzTitle="Dropbox"
+            ></nz-card-meta>
+            <nz-row [nzGutter]="16" *ngIf="dropboxIsLoggedIn">
+                <nz-col [nzSpan]="8" style="text-align: center;">
+                    <br/>
+                    <i nz-icon nzType="logout" [nzTheme]="'outline'" style="font-size: 50px; cursor: pointer;" (click)="logoutDropbox()" nzTooltipTitle="Logout" nz-tooltip></i>
+                </nz-col>
+                <nz-col [nzSpan]="8" style="text-align: center;">
+                    <br/>
+                    <i nz-icon nzType="cloud-upload" [nzTheme]="'outline'" style="font-size: 50px; cursor: pointer;" (click)="storeInDropbox()" nzTooltipTitle="Store data in cloud" nz-tooltip></i>
+                </nz-col>
+                <nz-col [nzSpan]="8" style="text-align: center;">
+                    <br/>
+                    <i nz-icon nzType="cloud-download" [nzTheme]="'outline'" style="font-size: 50px; cursor: pointer;" (click)="restoreFromDropbox()" nzTooltipTitle="Restore data from cloud" nz-tooltip></i>
+                </nz-col>
+            </nz-row>
+            <nz-row [nzGutter]="16" *ngIf="!dropboxIsLoggedIn">
+                <nz-col [nzSpan]="8" style="text-align: center;">
+                    <br/>
+                    <i nz-icon nzType="login" [nzTheme]="'outline'" style="font-size: 50px; cursor: pointer;" (click)="setDropboxVisible()" nzTooltipTitle="Login" nz-tooltip></i>
+                </nz-col>
+            </nz-row>
+        </nz-card>
+    </div>
+
+    <div class="layer">
+        <nz-card class="defaultcard" id="mastodon" [nzCover]="mastodonTemplate">
+            <div class="image-glas splinter-1"></div>
+            <div class="image-glas splinter-2"></div>
+            <div class="image-glas splinter-3"></div>
+            <nz-card-meta
+                nzTitle="Mastodon"
+            ></nz-card-meta>
+            <nz-row [nzGutter]="16"  *ngIf="!mastodonIsLoggedIn">
+                <nz-col [nzSpan]="8" style="text-align: center;">
+                    <br/>
+                    <i nz-icon nzType="login" [nzTheme]="'outline'" style="font-size: 50px; cursor: pointer;" (click)="setMastodonVisible()" nzTooltipTitle="Login" nz-tooltip></i>
+                </nz-col>
+            </nz-row>
+            <nz-row [nzGutter]="16"  *ngIf="mastodonIsLoggedIn">
+                <nz-col [nzSpan]="8" style="text-align: center;">
+                    <br/>
+                    <i nz-icon nzType="logout" [nzTheme]="'outline'" style="font-size: 50px; cursor: pointer;" (click)="logoutMastodon()" nzTooltipTitle="Logout" nz-tooltip></i>
+                </nz-col>
+            </nz-row>
+        </nz-card>
+    </div>
 
     <ng-template #createTemplate>
         <i nz-icon nzType="plus-circle" [nzTheme]="'twotone'" [nzTwotoneColor]="'#084C61'" style="font-size: 50px;"></i>

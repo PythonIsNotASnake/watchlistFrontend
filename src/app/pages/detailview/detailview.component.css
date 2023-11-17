@@ -14,10 +14,60 @@ button {
   color: lightgray;
 }
 #mastodonShare:hover {
-  outline: 0.3rem solid #595aff;
-  background-color: #858afa;
+  /*outline: 0.3rem solid #595aff;
+  background-color: #858afa;*/
 }
 
 ::ng-deep .ant-input-group-addon {
   border-radius: 5px 0px 0px 5px;
+}
+
+.layer {
+  perspective: 800px;
+  position: relative;
+  width: fit-content;
+  &:hover {
+    .image-glas {
+      background-color: rgba(133, 138, 250, 0.5);
+      backdrop-filter: blur(0.2rem);
+      border: 0.1rem solid rgba(133, 138, 250, 0.8);
+      &.splinter-1 {
+        transform: translate3d(-1rem, -0.5rem, 7rem) rotate3d(0, 1, 0, 35deg);
+      }
+      &.splinter-2 {
+        transform: translate3d(1rem, -0.5rem, 7rem) rotate3d(0, 1, 0, -35deg);
+      }
+      &.splinter-3 {
+        transform: translate3d(0, 0.7rem, 1rem) rotate3d(1, 0, 0, 35deg);
+      }
+    }
+    .brokenMastodon {
+      transform: rotateX(30deg);
+    }
+  }
+  .brokenMastodon {
+    transition: 150ms ease-out all;
+  }
+  .image-glas {
+    z-index: 1;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 170px;
+    height: 30px;
+    border-radius: 5px;
+    background-color: rgba(133, 138, 250, 0);
+    backdrop-filter: blur(0);
+    border: 0.1rem solid rgba(133, 138, 250, 0);
+    transition: 150ms ease-out all;
+    &.splinter-1 {
+      clip-path: polygon(50% 50%, 35% 0, 0 0, 0 70%);
+    }
+    &.splinter-2 {
+      clip-path: polygon(35% 0, 100% 0, 100% 70%, 50% 50%);
+    }
+    &.splinter-3 {
+      clip-path: polygon(50% 50%, 100% 70%, 100% 100%, 0 100%, 0 70%);
+    }
+  }
 }
