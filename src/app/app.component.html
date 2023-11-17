@@ -1,24 +1,22 @@
 <nz-layout class="app-layout secondary">
   <nz-header class="logo primary logo-container">
-    
+
       <div>
         <img routerLink="" src="./assets/logoframe.png" alt="Italian Trulli" style="width: 40px; height: 40px; cursor: pointer;">
       </div>
       <div>
         <h1 routerLink="" style="color: white; cursor: pointer;">WatchList</h1>
       </div>
-    
+
   </nz-header>
   <nz-content>
-    <!--<div class="inner-content">-->
-      <div class="greatcontainer">
-        <div class="card" style="width: 70%; border-radius: 10px;">
-          <router-outlet></router-outlet>
-        </div>
-        <div style="width: 30%;">
-          <app-dashboard></app-dashboard>
-        </div>
+    <div class="greatcontainer">
+      <div class="card" style="width: 70%; border-radius: 10px;">
+        <router-outlet></router-outlet>
       </div>
-    <!--</div>-->
+      <div style="width: 30%;">
+        <app-dashboard></app-dashboard>
+      </div>
+    </div>
   </nz-content>
 </nz-layout>
