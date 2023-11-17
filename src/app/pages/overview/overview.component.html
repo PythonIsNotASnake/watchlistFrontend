@@ -28,7 +28,12 @@ justify-content: space-evenly;">
             </thead>
             <tbody>
                 <tr *ngFor="let data of basicTable.data">
-                    <td routerLink="/detail/{{ data.id }}" style="cursor: pointer;">{{ data.title }}</td>
+                    <td routerLink="/detail/{{ data.id }}" style="cursor: pointer;" nz-popover [nzPopoverContent]="preview">{{ data.title }}</td>
+                    <ng-template #preview>
+                      <div style="border-radius: 10px; width: 320px; height: 190px; overflow: hidden;">
+                        <iframe width="320" height="190" [src]="this.sanitizer.bypassSecurityTrustResourceUrl(data.link + '?enablejsapi=1')" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                      </div>
+                    </ng-template>
                     <td routerLink="/detail/{{ data.id }}" style="cursor: pointer;">{{ data.genre }}</td>
                     <td>
                         <i routerLink="/administration/{{ data.id }}" nz-icon nzType="edit" [nzTheme]="'twotone'" [nzTwotoneColor]="'brown'"></i>
@@ -43,12 +48,12 @@ justify-content: space-evenly;">
                             nzPopconfirmPlacement="top"
                             [nzIcon]="'delete'"
                             [nzPopconfirmOverlayClassName]="'deletepopover'"
-                            nz-icon nzType="delete" 
-                            [nzTheme]="'twotone'" 
-                            [nzTwotoneColor]="'red'" 
+                            nz-icon nzType="delete"
+                            [nzTheme]="'twotone'"
+                            [nzTwotoneColor]="'red'"
                             style="cursor: pointer;">
                         </i>
-                        
+
                     </td>
                 </tr>
             </tbody>

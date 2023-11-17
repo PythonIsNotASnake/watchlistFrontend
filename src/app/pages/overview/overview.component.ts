@@ -6,6 +6,7 @@ import { RecordModel } from "src/app/models/record";
 import { ResponseRecordsModel } from "src/app/models/response-records";
 import { BaseApiService } from "src/app/services/base.api.service";
 import { AppConfigService } from "../../app.config.service";
+import { DomSanitizer } from "@angular/platform-browser";
 
 @Component({
   selector: "app-overview",
@@ -88,8 +89,9 @@ export class OverviewComponent implements OnInit {
   }
 
   constructor(
-    private notification: NzNotificationService, 
-    private config: AppConfigService, 
+    private notification: NzNotificationService,
+    private config: AppConfigService,
+    public sanitizer: DomSanitizer,
     private baseApi: BaseApiService) {}
-  
+
 }

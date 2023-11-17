@@ -17,14 +17,15 @@ import { OverviewRoutingModule } from "./overview-routing.module";
 
 import { OverviewComponent } from "./overview.component";
 import { NzPaginationModule } from "ng-zorro-antd/pagination";
+import { NzPopoverModule } from "ng-zorro-antd/popover";
 
 
 @NgModule({
   imports: [
-    OverviewRoutingModule, 
+    OverviewRoutingModule,
     CommonModule,
     FormsModule,
-    NzTableModule, 
+    NzTableModule,
     NzDividerModule,
     NzNotificationModule,
     NzPaginationModule,
@@ -34,7 +35,8 @@ import { NzPaginationModule } from "ng-zorro-antd/pagination";
     NzButtonModule,
     NzInputModule,
     NzSkeletonModule,
-    NzPopconfirmModule
+    NzPopconfirmModule,
+    NzPopoverModule
   ],
   declarations: [OverviewComponent],
   exports: [OverviewComponent]

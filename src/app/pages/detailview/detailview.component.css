@@ -14,6 +14,7 @@ button {
   color: lightgray;
 }
 #mastodonShare:hover {
+  outline: 0.3rem solid #595aff;
   background-color: #858afa;
 }
 
