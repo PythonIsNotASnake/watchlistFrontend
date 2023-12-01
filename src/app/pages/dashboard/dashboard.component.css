@@ -56,9 +56,9 @@ button {
   position: relative;
   &:hover {
     .image-glas {
-      background-color: rgba(255, 255, 255, 0.03);
+      background-color: rgba(198, 244, 250, 0.3);
       backdrop-filter: blur(0.2rem);
-      border: 0.1rem solid rgba(255, 255, 255, 0.5);
+      border: 0.1rem solid rgba(255, 255, 255, 0.8);
       &.splinter-1 {
         transform: translate3d(-3rem, -3rem, 7rem) rotate3d(0, 1, 0, 35deg);
       }
